@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CV</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        :root {
+            --pink-bg: #FCE4EC;
+            --pink-sidebar: #FFD1DC;
+            --pink-accent: #FF8E9E;
+            --text-dark: #2D2D2D;
+            --text-gray: #666666;
+            --white: #FFFFFF;
+        }
+        
+        html {
+        scroll-behavior: smooth;
+        }
+
+        .navbar-custom {
+        max-width: 1000px;
+        margin: 0 auto 20px auto;
+        background-color: var(--white);
+        border-radius: 15px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+        padding: 10px 20px;
+        }
+
+        .navbar-custom .nav-link {
+        color: var(--text-dark);
+        font-weight: 500;
+        transition: 0.3s;
+        }
+
+        .navbar-custom .nav-link:hover {
+        color: var(--pink-accent);
+        }
+
+        @media (max-width: 768px) {
+        .navbar-custom {
+        padding: 10px;
+        }
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--pink-bg);
+            color: var(--text-dark);
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        .cv-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background-color: var(--white);
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+            display: flex;
+            overflow: hidden;
+        }
+
+        .left-column {
+            width: 35%;
+            background-color: var(--pink-sidebar);
+            padding: 40px 30px;
+        }
+
+        .profile-pic {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .profile-pic img {
+            width: 210px;
+            height: 210px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 5px solid var(--white);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .left-section {
+            margin-bottom: 30px;
+        }
+
+        .left-title {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+            padding-bottom: 5px;
+            border-bottom: 2px solid var(--pink-accent);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 12px;
+            font-size: 0.9em;
+        }
+
+        .contact-item i {
+            margin-top: 4px;
+            margin-right: 10px;
+            color: var(--pink-accent);
+            width: 16px;
+        }
+
+        .contact-item a {
+            color: var(--text-dark);
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .contact-item a:hover {
+            color: var(--pink-accent);
+        }
+
+        .edu-item, .skill-item, .port-item {
+            margin-bottom: 15px;
+        }
+
+        .edu-item h4 {
+            font-size: 0.95em;
+            font-weight: 600;
+        }
+        
+        .edu-item p {
+            font-size: 0.85em;
+        }
+
+        .year-text {
+            color: var(--text-dark);
+            opacity: 0.5;
+            font-size: 0.85em;
+            font-style: italic;
+            display: block;
+            margin-bottom: 2px;
+        }
+
+        .skill-item h4 {
+            font-size: 0.9em;
+            font-weight: 600;
+            margin-bottom: 3px;
+        }
+
+        .skill-item p {
+            font-size: 0.8em;
+            color: var(--text-gray);
+            margin-bottom: 10px;
+        }
+
+        .port-item a {
+            font-size: 0.85em;
+            color: var(--text-dark);
+            text-decoration: none;
+            word-break: break-all;
+            display: block;
+            margin-bottom: 8px;
+            border-left: 2px solid var(--pink-accent);
+            padding-left: 8px;
+            transition: all 0.3s;
+        }
+
+        .port-item a:hover {
+            color: var(--pink-accent);
+            padding-left: 12px;
+        }
+
+        .right-column {
+            width: 65%;
+            padding: 50px 40px;
+        }
+
+        .header-name h1 {
+            font-size: 2.5em;
+            font-weight: 700;
+            color: var(--text-dark);
+            line-height: 1.2;
+            margin-bottom: 20px;
+            letter-spacing: 1px;
+            text-align: center;
+        }
+
+        .right-section {
+            margin-bottom: 35px;
+        }
+
+        .right-title {
+            font-size: 1.3em;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .right-title i {
+            color: var(--white);
+            background-color: var(--pink-accent);
+            width: 35px;
+            height: 35px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            margin-right: 15px;
+            font-size: 0.8em;
+        }
+
+        .desc-text {
+            text-align: justify;
+            color: var(--text-gray);
+            font-size: 0.95em;
+        }
+
+        .hobby-list {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+        padding: 0;
+        }
+
+        .hobby-list li {
+        background-color: var(--white);
+        border: 2px solid var(--pink-accent); 
+        border-radius: 10px;
+        padding: 15px;
+        font-size: 0.9em;
+        position: relative;
+        }
+
+        .hobby-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        }
+
+        .hobby-title {
+        font-weight: 600;
+        display: block;
+        margin-bottom: 5px;
+        }
+
+        .hobby-desc {
+        font-size: 0.85em;
+        color: var(--text-gray);
+        }
+
+        .hobby-title i {
+        color: var(--pink-accent);
+        margin-right: 8px;
+        font-size: 1em;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            font-size: 0.9em;
+            color: var(--text-gray);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-custom">
+        <div class="container-fluid">
+            <a class="navbar-brand fw-bold" href="#">CV NEJME</a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCV">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarCV">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#kontak">Kontak</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#pendidikan">Pendidikan</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#keahlian">Keahlian</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#portofolio">Portofolio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#profil">Profil</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#hobi">Hobi</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#prestasi">Prestasi</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#organisasi">Organisasi</a></li>
+                </ul>
+            </div>
+         </div>
+    </nav>
+
+    <div class="cv-container">
+        
+        <div class="left-column">
+            
+            <div class="profile-pic">
+                <img src="njm.jpg" alt="Foto Annajma Naeva Huwaida">
+            </div>
+
+            <div class="left-section" id="kontak">
+                <h3 class="left-title">Kontak</h3>
+                <div class="contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>Binorong Rt03/Rw03, Bawang, Banjarnegara, Jawa Tengah 53471</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <span>annajmanaeva@gmail.com</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fas fa-phone-alt"></i>
+                    <span>0882-0088-49299</span>
+                </div>
+                <div class="contact-item">
+                    <i class="fab fa-github"></i>
+                    <a href="https://github.com/annajmanaeva" target="_blank">Akun Github</a>
+                </div>
+                <div class="contact-item">
+                    <i class="fab fa-instagram"></i>
+                    <a href="https://instagram.com/naevaanh" target="_blank">@naevaanh</a>
+                </div>
+            </div>
+
+            <div class="left-section" id="pendidikan">
+                <h3 class="left-title">Pendidikan</h3>
+                <div class="edu-item">
+                    <h4>SMK NEGERI 1 Bawang</h4>
+                    <span class="year-text">sekarang - sedang menempuh pendidikan</span>
+                    <p>| Pengembangan Perangkat Lunak dan Gim</p>
+                </div>
+                <div class="edu-item">
+                    <h4>SMP NEGERI 1 Bawang</h4>
+                    <span class="year-text">2022 - 2025</span>
+                </div>
+                <div class="edu-item">
+                    <h4>SD NEGERI 1 Binorong</h4>
+                    <span class="year-text">2016 - 2022</span>
+                </div>
+            </div>
+
+            <div class="left-section" id="keahlian">
+                <h3 class="left-title">Keahlian</h3>
+                
+                <div class="skill-item">
+                    <h4>- Hard Skills -</h4>
+                    <p><b>Microsoft Word:</b> Menguasai pengetikan, formatting dokumen, dan pembuatan laporan yang rapi.</p>
+                    <p><b>Desain Canva:</b> Mampu membuat desain grafis kreatif untuk presentasi, poster, dan kebutuhan UI.</p>
+                    <p><b>HTML & CSS:</b> Dapat membangun kerangka website dan mengatur tampilan tata letak secara responsif.</p>
+                </div>
+                <br>
+                <div class="skill-item">
+                    <h4>- Soft Skills -</h4>
+                    <p><b>Komunikasi:</b> Mampu menyampaikan ide dengan jelas dan berinteraksi baik dengan orang lain.</p>
+                    <p><b>Kerja Sama Tim:</b> Solid dalam berkolaborasi dan membagi tugas untuk mencapai tujuan bersama.</p>
+                    <p><b>Disiplin:</b> Bertanggung jawab penuh terhadap tenggat waktu dan aturan yang berlaku.</p>
+                </div>
+            </div>
+
+            <div class="left-section" id="portofolio">
+                <h3 class="left-title">Portofolio</h3>
+                <div class="port-item">
+                    <a href="https://www.figma.com/design/fvZNWXQ1MPr3t6iL7EBPON/Untitled?node-id=0-1&t=JWpH0qrIU3GoW8MX-1" target="_blank">Projek UI/UX Figma</a>
+                    <a href="http://localhost/PortalBerita_20354/beranda.php" target="_blank">Projek Web Portal Berita</a>
+                    <a href="http://localhost/20354-form.php/20354-form.php" target="_blank">Projek Web Form</a>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="right-column">
+            
+            <div class="header-name">
+                <h1>ANNAJMA NAEVA HUWAIDA</h1>
+                <hr style="border: none; border-top: 5px dashed gray;">
+            </div>
+            <br>
+
+            <div class="right-section" id="profil">
+                <h3 class="right-title"><i class="fas fa-user"></i> Profil</h3>
+                <p class="desc-text">
+                    Saya merupakan pribadi yang bertanggung jawab, teliti, dan memiliki motivasi tinggi untuk terus berkembang. Memiliki minat di bidang teknologi dan desain. Saya mampu bekerja secara mandiri maupun dalam tim, serta mudah beradaptasi dengan lingkungan baru. Memiliki minat dalam mempelajari hal-hal baru, dan selalu berusaha menyelesaikan tugas dengan baik dan tepat waktu.
+                </p>
+            </div>
+
+            <div class="right-section" id="hobi">
+                <h3 class="right-title"><i class="fas fa-heart"></i> Hobi</h3>
+                <ul class="hobby-list">
+                    <li>
+                        <span class="hobby-title">
+                            <i class="fas fa-video"></i> Dokumentasi dan editing video
+                        </span>
+                        <span class="hobby-desc">Senang mengabadikan momen berharga dan merangkainya menjadi visual yang menarik.</span>
+                    </li>
+
+                    <li>
+                        <span class="hobby-title">
+                            <i class="fas fa-code"></i> Membuat website dan desain
+                        </span>
+                        <span class="hobby-desc">Mengeksplorasi kreativitas melalui barisan kode dan elemen visual grafis.</span>
+                    </li>
+
+                    <li>
+                        <span class="hobby-title">
+                            <i class="fas fa-plane"></i> Traveling
+                        </span>
+                        <span class="hobby-desc">Menjelajahi tempat baru untuk melepas penat dan mencari inspirasi.</span>
+                    </li>
+
+                    <li>
+                        <span class="hobby-title">
+                            <i class="fas fa-film"></i> Menonton film
+                        </span>
+                        <span class="hobby-desc">Menikmati alur cerita berbagai genre sebagai sarana hiburan dan memperluas imajinasi.</span>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="right-section" id="prestasi">
+                <h3 class="right-title"><i class="fas fa-trophy"></i> Prestasi</h3>
+                <ul class="achievement-list">
+                    <li>Juara 2 Festival Literasi Sekolah Bidang Cipta Cerpen Tingkat Kec. Bawang (2021)</li>
+                    <li>Juara 3 Lomba Kaligrafi Tingkat Kab. Banjarnegara (2020)</li>
+                </ul>
+            </div>
+
+            <div class="right-section" id="organisasi">
+                <h3 class="right-title"><i class="fas fa-users"></i> Organisasi & Kegiatan</h3>
+                <ul class="org-list">
+                <p>Aktif mengikuti:</p>
+                    <li>Ekstrakurikuler SEAS (Software Engineering Association Skanza)</li>
+                </ul>
+            </div>
+
+            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; Copyright 2026. All Rights Reserved by Najma Naeva | Made with ❤️</p>
+    </footer>
+
+</body>
+</html>
