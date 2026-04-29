@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>kalkulator dpk 2</title>
+    <style>
+        :root {
+            --bg-color: #fdf6f9;
+            --calc-main: #ffffff;
+            --accent-pink: #ffdee9;
+            --accent-blue: #d4f1f9;
+            --accent-purple: #e2dbff;
+            --accent-green: #e1f7d5;
+            --text-dark: #7d6b7d;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            font-family: 'Segoe UI', sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+        }
+
+        .calculator-body {
+            background: var(--calc-main);
+            padding: 30px;
+            border-radius: 40px;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.08);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            color: var(--text-dark);
+        }
+
+        .calc-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 10px;
+            margin-bottom: 20px;
+            margin-top: -10px;
+            letter-spacing: 2px;
+            color: #ff99c8;
+            text-transform: uppercase;
+        }
+
+        .screen-container {
+            width: 100%;
+            margin-bottom: 25px;
+        }
+
+        .screen {
+            width: 100%;
+            height: 90px;
+            background: #f9f9f9;
+            border: none;
+            border-radius: 20px;
+            text-align: right;
+            padding: 20px;
+            font-size: 32px;
+            box-sizing: border-box;
+            color: var(--text-dark);
+            box-shadow: inset 4px 4px 10px rgba(0,0,0,0.03);
+        }
+
+        .interface-grid {
+            display: flex;
+            gap: 20px;
+            align-items: stretch;
+        }
+
+        .history-section {
+            width: 180px;
+            background: #fafafa;
+            border-radius: 20px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+            border: 1px dashed var(--accent-pink);
+        }
+
+        .history-list {
+            flex-grow: 1;
+            height: 250px;
+            overflow-y: auto;
+            font-size: 13px;
+            margin: 10px 0;
+        }
+
+        .main-keys {
+            display: grid;
+            grid-template-columns: repeat(4, 70px);
+            gap: 12px;
+        }
+
+        #scientific-section {
+            display: none;
+            grid-template-columns: repeat(2, 70px);
+            gap: 12px;
+            background: var(--accent-blue);
+            padding: 15px;
+            border-radius: 20px;
+        }
+
+        button {
+            border: none;
+            border-radius: 18px;
+            height: 60px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: var(--accent-pink);
+            color: var(--text-dark);
+        }
+
+        button:hover {
+            filter: brightness(0.97);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 12px rgba(0,0,0,0.05);
+        }
+
+        button:active { transform: scale(0.95); }
+
+        .btn-op { background: var(--accent-purple); }
+        .btn-ac { background: #ffcfcf; }
+        .btn-eq { background: var(--accent-blue); grid-column: span 2; }
+        .btn-sci-toggle { 
+            grid-column: span 4; 
+            height: 45px; 
+            margin-top: 10px;
+            font-size: 14px;
+            background: var(--accent-green);
+        }
+
+        .history-item {
+            padding: 5px;
+            border-bottom: 1px solid #eee;
+            margin-bottom: 5px;
+        }
+
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-thumb { background: var(--accent-pink); border-radius: 10px; }
+    </style>
+</head>
+<body>
+
+    <div class="calculator-body">
+        <div class="calc-title">KALKULATOR</div>
+        
+        <div class="screen-container">
+            <input type="text" id="display" class="screen" disabled placeholder="0">
+        </div>
+
+        <div class="interface-grid">
+            <div class="history-section">
+                <span style="font-size: 12px; font-weight: bold; text-align: center;">RIWAYAT</span>
+                <div id="historyList" class="history-list"></div>
+                <button onclick="clearHistory()" style="height: 30px; font-size: 11px;">Hapus</button>
+            </div>
+
+            <div class="main-keys">
+                <button class="btn-ac" onclick="allClear()">AC</button>
+                <button class="btn-ac" onclick="clearLast()">C</button>
+                <button class="btn-op" onclick="appendSymbol('%')">%</button>
+                <button class="btn-op" onclick="appendSymbol('÷')">÷</button>
+
+                <button onclick="appendNumber('7')">7</button>
+                <button onclick="appendNumber('8')">8</button>
+                <button onclick="appendNumber('9')">9</button>
+                <button class="btn-op" onclick="appendSymbol('×')">×</button>
+
+                <button onclick="appendNumber('4')">4</button>
+                <button onclick="appendNumber('5')">5</button>
+                <button onclick="appendNumber('6')">6</button>
+                <button class="btn-op" onclick="appendSymbol('-')">-</button>
+
+                <button onclick="appendNumber('1')">1</button>
+                <button onclick="appendNumber('2')">2</button>
+                <button onclick="appendNumber('3')">3</button>
+                <button class="btn-op" onclick="appendSymbol('+')">+</button>
+
+                <button onclick="appendNumber('0')">0</button>
+                <button onclick="appendNumber('.')">.</button>
+                <button class="btn-eq" onclick="calculate()">=</button>
+                
+                <button class="btn-sci-toggle" onclick="toggleSci()">🔀</button>
+            </div>
+
+            <div id="scientific-section">
+                <button onclick="sciFunc('sin')">sin</button>
+                <button onclick="sciFunc('cos')">cos</button>
+                <button onclick="sciFunc('tan')">tan</button>
+                <button onclick="sciFunc('sqrt')">√</button>
+                <button onclick="sciFunc('log')">log</button>
+                <button onclick="sciFunc('pow')">x²</button>
+                <button onclick="sciFunc('pi')">π</button>
+                <button onclick="sciFunc('e')">e</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const display = document.getElementById('display');
+        const historyList = document.getElementById('historyList');
+
+        function appendNumber(n) {
+            if(display.value === '0') display.value = n;
+            else display.value += n;
+        }
+
+        function appendSymbol(s) {
+            display.value += s;
+        }
+
+        function allClear() { display.value = ''; }
+        
+        function clearLast() { display.value = display.value.slice(0, -1); }
+
+        function toggleSci() {
+            const sci = document.getElementById('scientific-section');
+            const btn = document.querySelector('.btn-sci-toggle');
+            if (sci.style.display === 'grid') {
+                sci.style.display = 'none';
+                btn.innerText = '🔀';
+            } else {
+                sci.style.display = 'grid';
+                btn.innerText = '✖';
+            }
+        }
+
+        function calculate() {
+            try {
+                let original = display.value;
+                let process = original.replace(/×/g, '*').replace(/÷/g, '/');
+                
+                if(process.includes('%')) {
+                    process = process.replace(/(\d+)%/g, "($1/100)");
+                }
+
+                let result = eval(process);
+                addHistory(original + " = " + result);
+                display.value = result;
+            } catch {
+                display.value = "ERROR";
+            }
+        }
+
+        function sciFunc(type) {
+            let val = parseFloat(display.value) || 0;
+            let res;
+            switch(type) {
+                case 'sin': res = Math.sin(val * Math.PI / 180); break;
+                case 'cos': res = Math.cos(val * Math.PI / 180); break;
+                case 'tan': res = Math.tan(val * Math.PI / 180); break;
+                case 'sqrt': res = Math.sqrt(val); break;
+                case 'log': res = Math.log10(val); break;
+                case 'pow': res = Math.pow(val, 2); break;
+                case 'pi': res = Math.PI; break;
+                case 'e': res = Math.E; break;
+            }
+            addHistory(type + "(" + val + ") = " + res.toFixed(3));
+            display.value = res;
+        }
+
+        function addHistory(msg) {
+            let item = document.createElement('div');
+            item.className = 'history-item';
+            item.innerText = msg;
+            historyList.prepend(item);
+        }
+
+        function clearHistory() { historyList.innerHTML = ''; }
+    </script>
+</body>
+</html>
