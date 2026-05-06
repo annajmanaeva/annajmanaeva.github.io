@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GameTebakKata-Kelompok11</title>
+    <link href="https://googleapis.com" rel="stylesheet">
+    <style>
+        :root {
+            --navy: #0a192f;
+            --slate-bg: #2d3436;
+            --slate-light: #636e72;
+            --accent: #fdcb6e;
+            --white: #dfe6e9;
+            --danger: #d63031;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background-color: var(--navy);
+            color: var(--white);
+            font-family: 'Pixelify Sans', sans-serif;
+            overflow: hidden;
+            height: 100vh;
+            display: flex; justify-content: center; align-items: center;
+        }
+
+        .parallax-layer { position: fixed; bottom: 0; left: 0; width: 100%; height: 100%; z-index: -1; }
+        .stars { background: radial-gradient(circle, #112240 0%, #0a192f 100%); }
+        .star { position: absolute; background: white; border-radius: 50%; animation: blink var(--d) infinite; }
+        @keyframes blink { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
+        .mountain { height: 40%; background: #1c3a63; clip-path: polygon(0% 100%, 15% 40%, 30% 70%, 45% 30%, 60% 60%, 75% 20%, 100% 100%); opacity: 0.5; bottom: 0; }
+        .firefly { position: absolute; width: 4px; height: 4px; background: var(--accent); box-shadow: 0 0 10px var(--accent); border-radius: 50%; animation: fly 5s infinite; }
+        @keyframes fly { 0% { transform: translateY(0) translateX(0); opacity: 0; } 50% { opacity: 1; } 100% { transform: translateY(-100px) translateX(50px); opacity: 0; } }
+
+        .main-card {
+            background: var(--slate-bg);
+            border: 6px solid var(--white); border-radius: 35px;
+            padding: 35px; box-shadow: 12px 12px 0px rgba(0,0,0,0.4);
+            text-align: center; max-width: 500px; width: 92%;
+            animation: float 4s ease-in-out infinite; position: relative; z-index: 10;
+        }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+
+        .btn-stone { background: var(--slate-light); color: var(--white); border: 4px solid var(--white); border-bottom: 8px solid #2d3436; padding: 12px 20px; margin: 10px; font-family: inherit; font-size: 1.2rem; cursor: pointer; border-radius: 20px; transition: 0.1s; }
+        .btn-stone:active { border-bottom: 2px solid #2d3436; transform: translateY(6px); }
+        .btn-stone:hover { background: var(--accent); color: #000; border-color: #000; }
+
+        .progress-container { width: 100%; height: 12px; background: rgba(0,0,0,0.3); border-radius: 10px; margin: 15px 0; overflow: hidden; border: 2px solid var(--white); }
+        #p-bar { width: 0%; height: 100%; background: var(--accent); transition: 0.5s; }
+
+        .floating-score {
+            position: fixed; color: var(--accent); font-weight: bold;
+            font-size: 2.5rem; animation: floatUp 1s forwards; z-index: 100;
+            pointer-events: none; text-shadow: 2px 2px #000;
+        }
+        @keyframes floatUp { from { transform: translateY(0); opacity: 1; } to { transform: translateY(-100px); opacity: 0; } }
+
+        .heart { display: inline-block; font-size: 1.8rem; margin: 0 2px; }
+        .heart-pulse { animation: pulse 0.6s infinite alternate; color: var(--danger); filter: drop-shadow(0 0 8px var(--danger)); }
+        @keyframes pulse { from { transform: scale(1); } to { transform: scale(1.4); } }
+
+        .word-box { display: flex; justify-content: center; gap: 8px; margin: 20px 0; flex-wrap: wrap; }
+        .letter { width: 40px; height: 50px; background: var(--white); border: 3px solid var(--slate-light); display: flex; justify-content: center; align-items: center; font-size: 1.8rem; border-radius: 12px; color: var(--slate-bg); transition: 0.3s; }
+        .letter.reveal { background: var(--accent); color: #000; border-color: #000; transform: scale(1.1); box-shadow: 0 5px 15px rgba(253, 203, 110, 0.4); }
+
+        .keyboard-grid { display: flex; flex-direction: column; gap: 6px; align-items: center; }
+        .kb-row { display: flex; gap: 5px; }
+        .key { 
+            background: var(--slate-light); border: 2px solid var(--white); color: var(--white); 
+            padding: 10px 12px; font-family: inherit; border-radius: 10px; 
+            cursor: pointer; transition: 0.2s; font-weight: bold;
+        }
+        .key:hover:not(:disabled) { transform: translateY(-5px); background: var(--accent); color: #000; border-color: #000; }
+        .key.correct { background: var(--accent); color: #000; border-color: #000; }
+        .key.wrong { opacity: 0.2; }
+
+        .result-box { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.7); display: none; justify-content: center; align-items: center; z-index: 1000; }
+        .result-content { background: var(--slate-bg); border: 6px solid var(--white); padding: 40px; border-radius: 35px; text-align: center; }
+    </style>
+</head>
+<body>
+    <div class="parallax-layer stars" id="star-box"></div>
+    <div class="parallax-layer mountain"></div>
+    <div id="firefly-box"></div>
+
+    <div class="main-card" id="menu-screen">
+        <h1 style="font-size: 3rem; color: var(--accent); text-shadow: 4px 4px #000;">Tebak Kata</h1>
+        <p style="margin: 10px 0; color: var(--white);">Asah Kecerdasanmu Dengan Tebak Semua Kata</p>
+        <button class="btn-stone" onclick="switchScreen('category-screen')">MULAI GAME . .</button>
+    </div>
+
+    <div class="main-card" id="category-screen" style="display: none;">
+        <h2 style="color: var(--white);">PILIH KATEGORI</h2>
+        <button class="btn-stone" onclick="startGame('dunia')">🌍 DUNIA</button>
+        <button class="btn-stone" onclick="startGame('hewan')">🐾 HEWAN</button>
+        <button class="btn-stone" onclick="startGame('buah')">🍎 BUAH</button>
+    </div>
+
+    <div class="main-card" id="game-screen" style="display: none;">
+        <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div id="lives-ui"></div>
+            <div id="score-ui" style="font-weight: bold; color: var(--accent);">SKOR: 0</div>
+        </div>
+        <div class="progress-container"><div id="p-bar"></div></div>
+        <p id="clue-display" style="background: rgba(0,0,0,0.4); padding: 12px; border-radius: 15px; margin: 10px 0; color: var(--white); font-weight: bold; border-left: 5px solid var(--accent);"></p>
+        <div class="word-box" id="word-ui"></div>
+        <div class="keyboard-grid" id="keyboard-ui"></div>
+    </div>
+
+    <div class="result-box" id="result-box">
+        <div class="result-content">
+            <h1 id="result-title" style="color: var(--accent);"></h1>
+            <p id="result-desc" style="margin: 20px 0;"></p>
+            <button class="btn-stone" onclick="resetGame()">COBA LAGI</button>
+            <button class="btn-stone" onclick="location.reload()">KEMBALI</button>
+        </div>
+    </div>
+
+    <div class="result-box" id="correct-box">
+        <div class="result-content">
+            <h1 style="color: var(--accent);">JAWABAN BENAR!</h1>
+            <p style="margin: 20px 0;">Siap lanjut ke soal berikutnya?</p>
+            <button class="btn-stone" onclick="nextQuestion()">LANJUTKAN</button>
+        </div>
+    </div>
+
+    <script>
+        const gameData = {
+            dunia: [
+                { q: "Negara yang mendapat julukan Negeri Gajah Putih di Asia Tenggara", a: "THAILAND" },
+                { q: "Negara kepulauan terbesar di dunia yang merupakan pendiri ASEAN", a: "INDONESIA" },
+                { q: "Negara terkecil di Asia Tenggara namun sangat maju ekonominya", a: "SINGAPURA" },
+                { q: "Benua terkecil di dunia", a: "AUSTRALIA" },
+                { q: "Negara yang memiliki ikon bangunan kuno megah Angkor Wat", a: "KAMBOJA" },
+                { q: "Negara tetangga Indonesia yang dipisahkan oleh Selat Malaka", a: "MALAYSIA" },
+                { q: "Negara di ASEAN yang tidak memiliki garis pantai atau wilayah laut", a: "LAOS" },
+                { q: "Negara yang memiliki mata uang Peso dan ibu kota Manila", a: "FILIPINA" },
+                { q: "Gunung tertinggi di dunia", a: "EVEREST" },
+                { q: "Negara yang dikenal sebagai lumbung padi terbesar di Asia Tenggara", a: "VIETNAM" },
+                { q: "Negara kerajaan yang kaya akan sumber daya minyak bumi", a: "BRUNEI" },
+                { q: "Negara yang dulunya bernama Burma dan beribu kota Naypyidaw", a: "MYANMAR" },
+                { q: "Negara yang merdeka dari Indonesia pada tahun 2002", a: "TIMOR LESTE" },
+                { q: "Samudera terluas di bumi", a: "PASIFIK" },
+                { q: "Kota dimana tempat Menara Eiffel berada", a: "PARIS" }
+            ],
+            hewan: [
+                { q: "Hewan mamalia laut yang dikenal sangat cerdas dan suka menolong", a: "LUMBA LUMBA" },
+                { q: "Hewan yang memiliki leher sangat panjang untuk memakan daun di pohon", a: "JERAPAH" },
+                { q: "Burung yang aktif di malam hari dan bisa memutar kepalanya 270 derajat", a: "HANTU" },
+                { q: "Hewan yang memiliki kantung di perutnya untuk membawa anaknya", a: "KANGGURU" },
+                { q: "Hewan melata yang tidak berkaki dan bergerak dengan otot perut", a: "ULAR" },
+                { q: "Raja hutan yang memiliki rambut tebal di sekitar lehernya", a: "SINGA" },
+                { q: "Hewan darat terbesar yang memiliki belalai panjang dan gading", a: "GAJAH" },
+                { q: "Hewan lambat yang membawa cangkang rumahnya ke mana-mana", a: "SIPUT" },
+                { q: "Hewan peliharaan yang dikenal setia dan memiliki penciuman tajam", a: "ANJING" },
+                { q: "Hewan mahir memanjat yang sangat menyukai buah pisang", a: "MONYET" },
+                { q: "Serangga yang mengalami metamorfosis dari ulat yang cantik", a: "KUPU KUPU" },
+                { q: "Hewan yang bisa hidup di gurun pasir tanpa minum dalam waktu lama", a: "UNTA" },
+                { q: "Hewan yang memiliki duri tajam di seluruh tubuhnya untuk perlindungan", a: "LANDAK" },
+                { q: "Predator laut yang memiliki gigi tajam dan indra penciuman darah", a: "HIU" },
+                { q: "Hewan asli Tiongkok yang sangat menyukai pucuk bambu muda", a: "PANDA" }
+            ],
+            buah: [
+                { q: "Buah yang dijuluki sebagai Raja Buah karena baunya yang sangat tajam", a: "DURIAN" },
+                { q: "Buah dengan kulit merah berambut dan daging buah berwarna putih", a: "RAMBUTAN" },
+                { q: "Buah yang mengandung banyak air dan isinya berwarna merah atau kuning", a: "SEMANGKA" },
+                { q: "Buah yang sering muncul di dongeng Putri Salju dan berwarna merah", a: "APEL" },
+                { q: "Buah tropis berbentuk bulat, berkulit ungu tua, dan isinya sangat putih", a: "MANGGIS" },
+                { q: "Buah kecil berbentuk bulat yang tumbuh bergerombol di tangkainya", a: "ANGGUR" },
+                { q: "Buah yang kulitnya memiliki sisik seperti kulit ular dan isinya manis", a: "SALAK" },
+                { q: "Buah berbentuk bintang jika dipotong secara melintang", a: "BELIMBING" },
+                { q: "Buah kuning panjang yang sangat disukai oleh hewan monyet", a: "PISANG" },
+                { q: "Buah yang memiliki mahkota duri dan daging buah berwarna kuning asam", a: "NANAS" },
+                { q: "Buah yang isinya sering dijadikan santan untuk masakan", a: "KELAPA" },
+                { q: "Buah berwarna oranye yang mengandung vitamin C sangat tinggi", a: "JERUK" },
+                { q: "Buah yang kulitnya kasar berwarna cokelat dan isinya seperti mentega", a: "ALPUKAT" },
+                { q: "Buah kecil berwarna merah yang permukaannya dipenuhi bintik biji", a: "STROBERI" },
+                { q: "Buah yang dagingnya berwarna oranye lembut dan bijinya hitam kecil", a: "PEPAYA" }
+
+            ]
+        };
+
+        const qwerty = [["Q","W","E","R","T","Y","U","I","O","P"],["A","S","D","F","G","H","J","K","L"],["Z","X","C","V","B","N","M"]];
+        let currentCat = "", qIdx = 0, score = 0, lives = 5, target = "", display = [], usedKeys = [];
+
+        function initVisuals() {
+            const sBox = document.getElementById('star-box');
+            for(let i=0; i<40; i++) {
+                const s = document.createElement('div'); s.className = 'star';
+                s.style.left = Math.random()*100+'%'; s.style.top = Math.random()*100+'%';
+                s.style.width = s.style.height = Math.random()*3+'px';
+                s.style.setProperty('--d', Math.random()*3+1+'s'); sBox.appendChild(s);
+            }
+            const fBox = document.getElementById('firefly-box');
+            for(let i=0; i<10; i++) {
+                const f = document.createElement('div'); f.className = 'firefly';
+                f.style.left = Math.random()*100+'%'; f.style.bottom = '10%';
+                f.style.animationDelay = Math.random()*5+'s'; fBox.appendChild(f);
+            }
+        }
+
+        function showCorrectBox() {
+            document.getElementById('correct-box').style.display = 'flex';
+        }
+
+        function nextQuestion() {
+            document.getElementById('correct-box').style.display = 'none';
+            qIdx++;
+            if(qIdx < gameData[currentCat].length) {
+                loadQ();
+            } else {
+                showResult("SELAMAT KAMU MENANG!", "Skor akhir kamu: " + score);
+            }
+        }
+
+        function switchScreen(id) {
+            document.querySelectorAll('.main-card').forEach(c => c.style.display = 'none');
+            document.getElementById(id).style.display = 'block';
+        }
+
+        function startGame(cat) {
+            currentCat = cat; qIdx = 0; score = 0; lives = 5;
+            switchScreen('game-screen'); loadQ();
+        }
+
+        function loadQ() {
+            usedKeys = [];
+            const data = gameData[currentCat][qIdx];
+            target = data.a.toUpperCase();
+            display = target.split('').map(c => c === ' ' ? ' ' : '_');
+            document.getElementById('clue-display').innerText = data.q;
+            render(); updateUI();
+        }
+
+        function render() {
+            const ui = document.getElementById('word-ui'); ui.innerHTML = "";
+            display.forEach(char => {
+                const b = document.createElement('div');
+                if(char === ' ') { b.style.width = '20px'; }
+                else { b.className = 'letter' + (char !== '_' ? ' reveal' : ''); b.innerText = char === '_' ? '' : char; }
+                ui.appendChild(b);
+            });
+
+            const kb = document.getElementById('keyboard-ui'); kb.innerHTML = "";
+            qwerty.forEach(row => {
+                const rowDiv = document.createElement('div'); rowDiv.className = 'kb-row';
+                row.forEach(l => {
+                    const k = document.createElement('button'); k.className = 'key';
+                    if(usedKeys.includes(l)) { k.classList.add(target.includes(l) ? 'correct' : 'wrong'); k.disabled = true; }
+                    k.innerText = l; k.onclick = () => check(l); rowDiv.appendChild(k);
+                });
+                kb.appendChild(rowDiv);
+            });
+        }
+
+        function check(letter) {
+            letter = letter.toUpperCase();
+            if(usedKeys.includes(letter) || document.getElementById('game-screen').style.display === 'none') return;
+            usedKeys.push(letter);
+            if(!target.includes(letter)) {
+                lives--;
+                if(lives <= 0) showResult("GAME OVER", "Jangan menyerah! Jawabannya: " + target);
+            } else {
+                target.split('').forEach((c, i) => { if(c === letter) display[i] = letter; });
+                score += 10;
+                spawnScore();
+            }
+            render(); updateUI();
+            if(!display.includes('_')) {
+                showCorrectBox();
+            }
+        }
+
+        function spawnScore() {
+            const s = document.createElement('div');
+            s.className = 'floating-score'; s.innerText = "+10";
+            s.style.left = '50%'; s.style.top = '50%';
+            document.body.appendChild(s);
+            setTimeout(() => s.remove(), 1000);
+        }
+
+        window.addEventListener('keydown', (e) => { const key = e.key.toUpperCase(); if(key.length === 1 && key >= 'A' && key <= 'Z') check(key); });
+        function showResult(title, desc) { document.getElementById('result-title').innerText = title; document.getElementById('result-desc').innerText = desc; document.getElementById('result-box').style.display = 'flex'; }
+        function resetGame() { document.getElementById('result-box').style.display = 'none'; startGame(currentCat); }
+        
+        function updateUI() {
+            const livesUI = document.getElementById('lives-ui'); livesUI.innerHTML = "";
+            for(let i=0; i<5; i++) {
+                const span = document.createElement('span'); span.className = 'heart';
+                span.style.opacity = i < lives ? '1' : '0.2'; span.innerText = "❤️";
+                if(lives === 1 && i === 0) span.classList.add('heart-pulse');
+                livesUI.appendChild(span);
+            }
+            document.getElementById('score-ui').innerText = "SKOR: " + score;
+            const targetLen = target.replace(/ /g, '').length;
+            const currentLen = display.filter(c => c !== '_' && c !== ' ').length;
+            document.getElementById('p-bar').style.width = (currentLen / targetLen) * 100 + "%";
+        }
+
+        initVisuals();
+    </script>
+</body>
+</html>
