@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desa Binorong - Statistik Penduduk</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .navbar-custom {
+            z-index: 1050 !important;
+        }
+
+        .shadow-text {
+            font-size: 3rem;
+            font-weight: 800;
+            color: #ffffff;
+            text-shadow: 3px 4px 8px rgba(0, 0, 0, 0.4);
+            letter-spacing: 1px;
+        }
+
+        .glass-box {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 18px;
+            padding: 25px;
+            color: #4a110d;
+            font-weight: 600;
+            line-height: 1.6;
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.05);
+        }
+
+        .stat-card-main {
+            background: #ffffff;
+            border: none;
+            border-radius: 14px;
+            padding: 20px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease;
+        }
+        .stat-card-main:hover {
+            transform: translateY(-5px);
+        }
+        .stat-card-main img {
+            width: 65px;
+            height: 65px;
+            object-fit: contain;
+        }
+
+        .infografis-card {
+            background: #ffffff;
+            border-radius: 16px;
+            border: 1px solid #eef0f3;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.02);
+            padding: 25px;
+            height: 100%;
+        }
+        .infografis-title {
+            color: #730903;
+            font-weight: 700;
+            font-size: 1.15rem;
+            border-bottom: 2px dashed #eed6d5;
+            padding-bottom: 12px;
+            margin-bottom: 20px;
+        }
+
+        .stat-label-box {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.88rem;
+            font-weight: 600;
+            color: #444;
+            margin-bottom: 4px;
+        }
+        .progress-custom-bg {
+            background-color: #f0f2f5;
+            border-radius: 6px;
+            height: 10px;
+            margin-bottom: 16px;
+            overflow: hidden;
+        }
+        .progress-custom-bar {
+            background-color: #730903;
+            height: 100%;
+            border-radius: 6px;
+        }
+
+        .scrollable-stat-box {
+            max-height: 480px;
+            overflow-y: auto;
+            padding-right: 5px;
+            position: relative;
+        }
+        .scrollable-stat-box::-webkit-scrollbar { width: 5px; }
+        .scrollable-stat-box::-webkit-scrollbar-thumb { background: #be7777; border-radius: 10px; }
+       
+        .scrollable-stat-box table thead {
+            position: sticky !important;
+            top: 0 !important;
+            z-index: 5 !important;
+        }
+        .scrollable-stat-box table thead th {
+            background-color: #212529 !important;
+            color: #ffffff !important;
+            box-shadow: inset 0 -1px 0 #212529; 
+        }
+
+        .pmi-hover-card {
+            transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1) !important;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            background-color: #f8f9fa !important;
+        }
+        .pmi-hover-card:hover {
+            transform: translateY(-6px) scale(1.02);
+            border-color: #730903 !important;
+            background-color: #ffffff !important;
+            box-shadow: 0 12px 24px rgba(115, 9, 3, 0.15) !important;
+        }
+  
+        .pmi-hover-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: #730903;
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+        .pmi-hover-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .footer-desa-resmi {
+            background-color: #730903 !important;
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+        }
+  
+        .tracking-wider {
+            letter-spacing: 0.5px;
+        }
+
+        .email-footer-link {
+            transition: color 0.2s ease, text-decoration 0.2s ease;
+        }
+
+        .email-footer-link:hover {
+            color: #be7777 !important;
+            text-decoration: underline !important;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="beranda.html">
+                <img src="assets/images/bg/LogoKabBna.png" alt="Logo" width="40" class="me-2">
+                <div>DESA BINORONG<span>Kec. Bawang Kab. Banjarnegara</span></div>
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <i class="fa-solid fa-bars text-white"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item"><a class="nav-link" href="beranda.html">Beranda</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdownProfil" role="button" data-bs-toggle="dropdown" aria-expanded="false">Profil</a>
+                        <ul class="dropdown-menu shadow" aria-labelledby="dropdownProfil">
+                            <li><a class="dropdown-item" href="/website-profildesa/profil/sejarah.html">Sejarah</a></li>
+                            <li><a class="dropdown-item" href="/website-profildesa/profil/visi-misi.html">Visi Misi</a></li>
+                            <li><a class="dropdown-item" href="/website-profildesa/profil/peta.html">Peta Desa</a></li>
+                            <li><a class="dropdown-item" href="/website-profildesa/profil/geografis.html">Kondisi Geografis</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="sotk/organisasi.html">SOTK</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="statistik.html">Statistik</a></li>
+                    <li class="nav-item"><a class="nav-link" href="umkm.html">UMKM</a></li>
+                    <li class="nav-item"><a class="nav-link" href="potensi.html">Potensi</a></li>
+                    <li class="nav-item"><a class="nav-link" href="album.html">Album</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="main-content-section" style="background: #fbf0ef; padding-bottom: 40px;">
+        <div class="container">
+            
+            <div class="row align-items-center mb-5">
+                <div class="col-lg-7">
+                    <h1 class="shadow-text mb-4 text-uppercase">Statistik Penduduk</h1>
+                    <div class="glass-box mb-4">Memberikan informasi lengkap mengenai karakteristik demografi penduduk suatu wilayah. Mulai dari jumlah penduduk, usia, jenis kelamin, tingkat pendidikan, pekerjaan, agama, dan aspek penting lainnya yang menggambarkan komposisi populasi secara rinci.</div>
+                </div>
+                <div class="col-lg-5 text-center text-lg-start">
+                    <img src="assets/images/icon/iconstatistik.png" alt="Ilustrasi Statistik" class="img-fluid" style="max-height: 325px;">
+                </div>
+            </div>
+
+            <h4 class="fw-bold mb-4 text-uppercase" style="color: #730903; letter-spacing: 0.5px;">Jumlah Penduduk dan Kepala Keluarga</h4>
+            
+            <div class="row g-4">
+                <div class="col-md-6 col-xl-3">
+                    <div class="stat-card-main d-flex align-items-center">
+                        <img src="assets/images/icon/icon2.png" alt="Icon" class="me-3">
+                        <div>
+                            <div class="text-secondary fw-bold small text-uppercase">Total Penduduk</div>
+                            <div class="fs-4 text-dark"><span style="color: #be7777; font-weight: 800;">5.343</span> Jiwa</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-xl-3">
+                    <div class="stat-card-main d-flex align-items-center">
+                        <img src="assets/images/icon/icon3.png" alt="Icon" class="me-3">
+                        <div>
+                            <div class="text-secondary fw-bold small text-uppercase">Kepala Keluarga</div>
+                            <div class="fs-4 text-dark"><span style="color: #be7777; font-weight: 800;">1.895</span> Keluarga</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-xl-3">
+                    <div class="stat-card-main d-flex align-items-center">
+                        <img src="assets/images/icon/icon1.png" alt="Icon" class="me-3">
+                        <div>
+                            <div class="text-secondary fw-bold small text-uppercase">Perempuan</div>
+                            <div class="fs-4 text-dark"><span style="color: #be7777; font-weight: 800;">2.663</span> Jiwa</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-6 col-xl-3">
+                    <div class="stat-card-main d-flex align-items-center">
+                        <img src="assets/images/icon/icon2.png" alt="Icon" class="me-3">
+                        <div>
+                            <div class="text-secondary fw-bold small text-uppercase">Laki-Laki</div>
+                            <div class="fs-4 text-dark"><span style="color: #be7777; font-weight: 800;">2.680</span> Jiwa</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <section class="py-5" style="background-color: #f4f5f7;">
+        <div class="container">
+            
+            <div class="row g-4">
+                
+                <div class="col-lg-6">
+                    <div class="infografis-card">
+                        <div class="infografis-title"><i class="fa-solid fa-cake-candles me-2"></i>Kategori Kelompok Umur</div>
+                        
+                        <div class="stat-label-box"><span>0 tahun sampai dengan 4 tahun</span><span>280 Jiwa</span></div>
+                        <div class="progress-custom-bg"><div class="progress-custom-bar" style="width: 64%;"></div></div>
+
+                        <div class="stat-label-box"><span>5 tahun sampai dengan 9 tahun</span><span>387 Jiwa</span></div>
+                        <div class="progress-custom-bg"><div class="progress-custom-bar" style="width: 88%;"></div></div>
+
+                        <div class="stat-label-box"><span>10 tahun sampai dengan 14 tahun</span><span>414 Jiwa</span></div>
+                        <div class="progress-custom-bg"><div class="progress-custom-bar" style="width: 95%;"></div></div>
+
+                        <div class="stat-label-box"><span>15 tahun sampai dengan 19 tahun</span><span>378 Jiwa</span></div>
+                        <div class="progress-custom-bg"><div class="progress-custom-bar" style="width: 86%;"></div></div>
+
+                        <div class="stat-label-box"><span>20 tahun sampai dengan 24 tahun</span><span>378 Jiwa</span></div>
+                        <div class="progress-custom-bg"><div class="progress-custom-bar" style="width: 86%;"></div></div>
+
+                        <div class="stat-label-box"><span>25 tahun sampai dengan 29 tahun</span><span>370 Jiwa</span></div>
+                        <div class="progress-custom-bg"><div class="progress-custom-bar" style="width: 84%;"></div></div>
+
+                        <div class="stat-label-box"><span>30 tahun sampai dengan 34 tahun</span><span>366 Jiwa</span></div>
+                        <div class="progress-custom-bg"><div class="progress-custom-bar" style="width: 83%;"></div></div>
+
+                        <div class="stat-label-box"><span>35 tahun sampai dengan 39 tahun</span><span>353 Jiwa</span></div>
+                        <div class="progress-custom-bg"><div class="progress-custom-bar" style="width: 80%;"></div></div>
+
+                        <div class="stat-label-box"><span>40 tahun sampai dengan 44 tahun</span><span>402 Jiwa</span></div>
+                        <div class="progress-custom-bg"><div class="progress-custom-bar" style="width: 92%;"></div></div>
+
+                        <div class="stat-label-box"><span>45 tahun sampai dengan 49 tahun</span><span>436 Jiwa</span></div>
+                        <div class="progress-custom-bg"><div class="progress-custom-bar" style="width: 100%;"></div></div>
+
+                        <div class="stat-label-box"><span>50 tahun sampai dengan 54 tahun</span><span>406 Jiwa</span></div>
+                        <div class="progress-custom-bg"><div class="progress-custom-bar" style="width: 93%;"></div></div>
+
+                        <div class="stat-label-box"><span>55 tahun sampai dengan 59 tahun</span><span>350 Jiwa</span></div>
+                        <div class="progress-custom-bg"><div class="progress-custom-bar" style="width: 80%;"></div></div>
+
+                        <div class="stat-label-box"><span>60 tahun sampai dengan 64 tahun</span><span>270 Jiwa</span></div>
+                        <div class="progress-custom-bg"><div class="progress-custom-bar" style="width: 61%;"></div></div>
+
+                        <div class="stat-label-box"><span>65 tahun sampai dengan 69 tahun</span><span>206 Jiwa</span></div>
+                        <div class="progress-custom-bg"><div class="progress-custom-bar" style="width: 47%;"></div></div>
+
+                        <div class="stat-label-box"><span>70 tahun sampai dengan 74 tahun</span><span>146 Jiwa</span></div>
+                        <div class="progress-custom-bg"><div class="progress-custom-bar" style="width: 33%;"></div></div>
+
+                        <div class="stat-label-box"><span>75 tahun sampai dengan 79 tahun</span><span>201 Jiwa</span></div>
+                        <div class="progress-custom-bg"><div class="progress-custom-bar" style="width: 46%;"></div></div>
+
+                        <div class="stat-label-box"><span>80 tahun keatas</span><span>0 Jiwa</span></div>
+                        <div class="progress-custom-bg"><div class="progress-custom-bar" style="width: 0%;"></div></div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+                    <div class="infografis-card">
+                        <div class="infografis-title"><i class="fa-solid fa-graduation-cap me-2"></i>Tingkat Pendidikan Jenjang Akhir</div>
+                        
+                        <div class="stat-label-box"><span>Tamat SD</span><span>1.333 Jiwa</span></div>
+                        <div class="progress-custom-bg"><div class="progress-custom-bar" style="width: 100%;"></div></div>
+
+                        <div class="stat-label-box"><span>Tamat SLTA</span><span>1.175 Jiwa</span></div>
+                        <div class="progress-custom-bg"><div class="progress-custom-bar" style="width: 88%;"></div></div>
+
+                        <div class="stat-label-box"><span>Tidak/Belum Sekolah</span><span>1.143 Jiwa</span></div>
+                        <div class="progress-custom-bg"><div class="progress-custom-bar" style="width: 85%;"></div></div>
+
+                        <div class="stat-label-box"><span>Tamat SLTP</span><span>1.030 Jiwa</span></div>
+                        <div class="progress-custom-bg"><div class="progress-custom-bar" style="width: 77%;"></div></div>
+
+                        <div class="stat-label-box"><span>Belum Tamat SD</span><span>351 Jiwa</span></div>
+                        <div class="progress-custom-bg"><div class="progress-custom-bar" style="width: 26%;"></div></div>
+
+                        <div class="stat-label-box"><span>S1</span><span>213 Jiwa</span></div>
+                        <div class="progress-custom-bg"><div class="progress-custom-bar" style="width: 16%;"></div></div>
+
+                        <div class="stat-label-box"><span>D3</span><span>69 Jiwa</span></div>
+                        <div class="progress-custom-bg"><div class="progress-custom-bar" style="width: 5%;"></div></div>
+
+                        <div class="stat-label-box"><span>D1/D2</span><span>21 Jiwa</span></div>
+                        <div class="progress-custom-bg"><div class="progress-custom-bar" style="width: 1.5%;"></div></div>
+
+                        <div class="stat-label-box"><span>S2</span><span>8 Jiwa</span></div>
+                        <div class="progress-custom-bg"><div class="progress-custom-bar" style="width: 0.6%;"></div></div>
+
+                        <div class="stat-label-box"><span>S3</span><span>0 Jiwa</span></div>
+                        <div class="progress-custom-bg"><div class="progress-custom-bar" style="width: 0%;"></div></div>
+                    </div>
+                </div>
+
+                <div class="col-lg-7">
+                    <div class="infografis-card">
+                        <div class="infografis-title"><i class="fa-solid fa-briefcase me-2"></i>Mata Pencaharian / Jenis Pekerjaan</div>
+                        <div class="scrollable-stat-box">
+                            <table class="table table-bordered table-hover align-middle mb-0">
+                                <thead class="table-dark text-center sticky-top">
+                                    <tr><th style="width: 10%;">NO</th><th>JENIS PEKERJAAN</th><th style="width: 30%;">JUMLAH</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td class="text-center">1</td><td>Belum/Tidak Bekerja</td><td class="fw-bold text-center">1.214 Jiwa</td></tr>
+                                    <tr><td class="text-center">2</td><td>Buruh Harian Lepas</td><td class="fw-bold text-center">567 Jiwa</td></tr>
+                                    <tr><td class="text-center">3</td><td>Buruh Tani/Ternak/Perkebunan</td><td class="fw-bold text-center">44 Jiwa</td></tr>
+                                    <tr><td class="text-center">4</td><td>Guru Non PNS/Honorer</td><td class="fw-bold text-center">10 Jiwa</td></tr>
+                                    <tr><td class="text-center">5</td><td>Industri</td><td class="fw-bold text-center">2 Jiwa</td></tr>
+                                    <tr><td class="text-center">6</td><td>Karyawan Swasta</td><td class="fw-bold text-center">163 Jiwa</td></tr>
+                                    <tr><td class="text-center">7</td><td>Kepala Desa</td><td class="fw-bold text-center">0 Jiwa</td></tr>
+                                    <tr><td class="text-center">8</td><td>Perangkat Desa</td><td class="fw-bold text-center">7 Jiwa</td></tr>
+                                    <tr><td class="text-center">9</td><td>TKI/TKW</td><td class="fw-bold text-center">108 Jiwa</td></tr>
+                                    <tr><td class="text-center">10</td><td>Mengurus Rumah Tangga</td><td class="fw-bold text-center">1.116 Jiwa</td></tr>
+                                    <tr><td class="text-center">11</td><td>Pedagang</td><td class="fw-bold text-center">81 Jiwa</td></tr>
+                                    <tr><td class="text-center">12</td><td>PNS</td><td class="fw-bold text-center">69 Jiwa</td></tr>
+                                    <tr><td class="text-center">13</td><td>Pelajar/Mahasiswa</td><td class="fw-bold text-center">721 Jiwa</td></tr>
+                                    <tr><td class="text-center">14</td><td>Pembantu Rumah Tangga</td><td class="fw-bold text-center">7 Jiwa</td></tr>
+                                    <tr><td class="text-center">15</td><td>Pensiunan</td><td class="fw-bold text-center">54 Jiwa</td></tr>
+                                    <tr><td class="text-center">16</td><td>Perdagangan</td><td class="fw-bold text-center">37 Jiwa</td></tr>
+                                    <tr><td class="text-center">17</td><td>Petani/Pekebun</td><td class="fw-bold text-center">253 Jiwa</td></tr>
+                                    <tr><td class="text-center">18</td><td>Sopir</td><td class="fw-bold text-center">15 Jiwa</td></tr>
+                                    <tr><td class="text-center">19</td><td>Swasta</td><td class="fw-bold text-center">544 Jiwa</td></tr>
+                                    <tr><td class="text-center">20</td><td>TNI</td><td class="fw-bold text-center">3 Jiwa</td></tr>
+                                    <tr><td class="text-center">21</td><td>Tukang Batu</td><td class="fw-bold text-center">18 Jiwa</td></tr>
+                                    <tr><td class="text-center">22</td><td>Tukang Jahit</td><td class="fw-bold text-center">3 Jiwa</td></tr>
+                                    <tr><td class="text-center">23</td><td>Wiraswasta</td><td class="fw-bold text-center">24 Jiwa</td></tr>
+                                    <tr><td class="text-center">24</td><td>Karyawan BUMN</td><td class="fw-bold text-center">19 Jiwa</td></tr>
+                                    <tr><td class="text-center">25</td><td>Lain - lain</td><td class="fw-bold text-center">264 Jiwa</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-5">
+                    <div class="row g-4">
+                        <div class="col-12">
+                            <div class="infografis-card">
+                                <div class="infografis-title"><i class="fa-solid fa-hands-praying me-2"></i>Pemeluk Agama & Kepercayaan</div>
+                                <div class="stat-label-box"><span>Islam</span><span>5.316 Jiwa</span></div>
+                                <div class="progress-custom-bg"><div class="progress-custom-bar" style="width: 100%;"></div></div>
+
+                                <div class="stat-label-box"><span>Kristen</span><span>19 Jiwa</span></div>
+                                <div class="progress-custom-bg"><div class="progress-custom-bar" style="width: 1%;"></div></div>
+
+                                <div class="stat-label-box"><span>Katolik</span><span>8 Jiwa</span></div>
+                                <div class="progress-custom-bg"><div class="progress-custom-bar" style="width: 0.5%;"></div></div>
+
+                                <div class="stat-label-box"><span>Hindu</span><span>0 Jiwa</span></div>
+                                <div class="progress-custom-bg"><div class="progress-custom-bar" style="width: 0%;"></div></div>
+
+                                <div class="stat-label-box"><span>Budha</span><span>0 Jiwa</span></div>
+                                <div class="progress-custom-bg"><div class="progress-custom-bar" style="width: 0%;"></div></div>
+
+                                <div class="stat-label-box"><span>Khonghucu</span><span>0 Jiwa</span></div>
+                                <div class="progress-custom-bg"><div class="progress-custom-bar" style="width: 0%;"></div></div>
+
+                                <div class="stat-label-box"><span>Kepercayaan Lain</span><span>0 Jiwa</span></div>
+                                <div class="progress-custom-bg"><div class="progress-custom-bar" style="width: 0%;"></div></div>
+                            </div>
+                        </div>
+
+                        <div class="col-12">
+                            <div class="infografis-card">
+                                <div class="infografis-title"><i class="fa-solid fa-wheelchair me-2"></i>Penyandang Disabilitas / Cacat</div>
+                                <div class="stat-label-box"><span>Cacat Mental</span><span>17 Jiwa</span></div>
+                                <div class="progress-custom-bg"><div class="progress-custom-bar" style="width: 100%;"></div></div>
+
+                                <div class="stat-label-box"><span>Tuna Netra</span><span>9 Jiwa</span></div>
+                                <div class="progress-custom-bg"><div class="progress-custom-bar" style="width: 53%;"></div></div>
+
+                                <div class="stat-label-box"><span>Cacat Fisik</span><span>8 Jiwa</span></div>
+                                <div class="progress-custom-bg"><div class="progress-custom-bar" style="width: 47%;"></div></div>
+
+                                <div class="stat-label-box"><span>Bisu / Tuli</span><span>2 Jiwa</span></div>
+                                <div class="progress-custom-bg"><div class="progress-custom-bar" style="width: 11%;"></div></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="infografis-card">
+                        <div class="infografis-title d-flex justify-content-between align-items-center flex-wrap">
+                            <span><i class="fa-solid fa-earth-americas me-2"></i>Pekerja Migran Indonesia (PMI) / Bekerja di Luar Negeri</span>
+                            <span class="badge bg-dark mt-2 mt-md-0 fs-7 px-3 py-2">Total: 30 Laki-Laki | 82 Perempuan</span>
+                        </div>
+                        <div class="row g-3">
+                            <div class="col-6 col-md-4 col-xl-2">
+                                <div class="p-3 border rounded text-center shadow-sm pmi-hover-card">
+                                    <div class="fw-bold text-dark mb-2">Korea Selatan</div>
+                                    <div class="small text-muted"><i class="fa-solid fa-mars text-primary"></i> L: 3 | <i class="fa-solid fa-venus text-danger"></i> P: 6</div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-4 col-xl-2">
+                                <div class="p-3 border rounded text-center shadow-sm pmi-hover-card">
+                                    <div class="fw-bold text-dark mb-2">Saudi Arabia</div>
+                                    <div class="small text-muted"><i class="fa-solid fa-mars text-primary"></i> L: 5 | <i class="fa-solid fa-venus text-danger"></i> P: 15</div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-4 col-xl-2">
+                                <div class="p-3 border rounded text-center shadow-sm pmi-hover-card">
+                                    <div class="fw-bold text-dark mb-2">Malaysia</div>
+                                    <div class="small text-muted"><i class="fa-solid fa-mars text-primary"></i> L: 5 | <i class="fa-solid fa-venus text-danger"></i> P: 21</div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-4 col-xl-2">
+                                <div class="p-3 border rounded text-center shadow-sm pmi-hover-card">
+                                    <div class="fw-bold text-dark mb-2">Hongkong</div>
+                                    <div class="small text-muted"><i class="fa-solid fa-mars text-primary"></i> L: 4 | <i class="fa-solid fa-venus text-danger"></i> P: 18</div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-4 col-xl-2">
+                                <div class="p-3 border rounded text-center shadow-sm pmi-hover-card">
+                                    <div class="fw-bold text-dark mb-2">Taiwan</div>
+                                    <div class="small text-muted"><i class="fa-solid fa-mars text-primary"></i> L: 9 | <i class="fa-solid fa-venus text-danger"></i> P: 13</div>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-4 col-xl-2">
+                                <div class="p-3 border rounded text-center shadow-sm pmi-hover-card">
+                                    <div class="fw-bold text-dark mb-2">Singapura</div>
+                                    <div class="small text-muted"><i class="fa-solid fa-mars text-primary"></i> L: 4 | <i class="fa-solid fa-venus text-danger"></i> P: 15</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div> </div>
+    </section>
+
+    <footer class="footer-desa-resmi text-white py-4 mt-5">
+        <div class="container">
+            <div class="row align-items-center mb-4">
+            
+                <div class="col-md-7 d-flex align-items-start mb-3 mb-md-0">
+                    <img src="/website-profildesa/assets/images/bg/LogoKabBna.png" alt="Logo Kabupaten" class="img-fluid me-3" style="width: 110px; height: auto;">
+                    <div>
+                        <h4 class="fw-bold text-uppercase tracking-wider mb-1" style="font-size: 18px;">Desa Binorong</h4>
+                        <p class="small text-white-50 mb-2 lh-base" style="font-size: 13px;">
+                            Jl. Ketewel, Desa Binorong,<br>
+                            Kecamatan Bawang, Kabupaten Banjarnegara
+                        </p>
+                        <span class="badge bg-white text-dark fw-bold px-3 py-1.5" style="border-radius: 20px; font-size: 11px; letter-spacing: 0.5px;">
+                            Kode Wilayah: 33.04.05.2012
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-md-5 text-md-end d-flex flex-column align-items-md-end align-items-start">
+                    <span class="fw-semibold text-white-50 mb-2" style="font-size: 14px;">Hubungi Kami</span>
+                
+                    <div class="mb-2" style="font-size: 14px;">
+                        <i class="fa-solid fa-phone me-1.5 text-white-50"></i> 
+                        <span class="text-white">-</span>
+                    </div>
+                
+                    <div style="font-size: 14px;">
+                        <a href="mailto:desabinorong@gmail.com" target="_blank" class="text-white text-decoration-none email-footer-link">
+                            <i class="fa-solid fa-envelope me-1.5 text-white-50"></i> desabinorong@gmail.com
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <hr style="border-color: rgba(255, 255, 255, 0.15); margin: 0 0 20px 0;">
+
+            <div class="row">
+                <div class="col-12 text-center">
+                    <p class="small mb-0 text-white-50" style="font-size: 12px; letter-spacing: 0.3px;">
+                        &copy; Copyright 2026. All Rights Reserved by Naeva | Made with ❤️
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bundle.min.js"></script>
+    <script src="js/main.js"></script>
+    <script>
+        function togglePengaduan() {
+            var panel = document.getElementById("panelPengaduan");
+            if (panel.style.display === "none" || panel.style.display === "") {
+                panel.style.display = "block";
+            } else {
+                panel.style.display = "none";
+            }
+        }
+
+        document.addEventListener("DOMContentLoaded", function() {
+            
+            const runCountUp = (element) => {
+                const targetText = element.innerText.trim().replace(/\./g, '');
+                const targetValue = parseInt(targetText, 10);
+                if (isNaN(targetValue)) return;
+
+                let startValue = 0;
+                const totalDuration = 1800;
+                const startTime = performance.now();
+
+                const animateStep = (currentTime) => {
+                    const timeElapsed = currentTime - startTime;
+                    const animationProgress = Math.min(timeElapsed / totalDuration, 1);
+                    
+                    const easeOutProgress = 1 - Math.pow(1 - animationProgress, 3);
+                    const currentValue = Math.floor(easeOutProgress * targetValue);
+
+                    element.innerText = currentValue.toLocaleString('id-ID');
+
+                    if (animationProgress < 1) {
+                        requestAnimationFrame(animateStep);
+                    } else {
+                        element.innerText = targetValue.toLocaleString('id-ID');
+                    }
+                };
+                requestAnimationFrame(animateStep);
+            };
+
+            const progressBars = document.querySelectorAll('.progress-custom-bar');
+            progressBars.forEach(bar => {
+                const finalWidth = bar.style.width || '0%';
+                bar.setAttribute('data-target-width', finalWidth);
+                bar.style.width = '0%';
+                bar.style.transition = 'width 1.5s cubic-bezier(0.25, 1, 0.5, 1)';
+            });
+
+            const cards = document.querySelectorAll('.infografis-card');
+            cards.forEach(card => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(25px)';
+                card.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
+            });
+
+            const observerConfiguration = {
+                threshold: 0.05,
+                rootMargin: "0px 0px -40px 0px"
+            };
+
+            const pageScrollObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        if (entry.target.classList.contains('stat-card-main')) {
+                            const numericSpan = entry.target.querySelector('.fs-4 span');
+                            if (numericSpan && !numericSpan.classList.contains('has-animated')) {
+                                numericSpan.classList.add('has-animated');
+                                runCountUp(numericSpan);
+                            }
+                        }
+                        if (entry.target.classList.contains('progress-custom-bg')) {
+                            const barElement = entry.target.querySelector('.progress-custom-bar');
+                            if (barElement) {
+                                barElement.style.width = barElement.getAttribute('data-target-width');
+                            }
+                        }
+                        if (entry.target.classList.contains('infografis-card')) {
+                            entry.target.style.opacity = '1';
+                            entry.target.style.transform = 'translateY(0)';
+                        }
+                    }
+                });
+            }, observerConfiguration);
+
+            document.querySelectorAll('.stat-card-main').forEach(el => pageScrollObserver.observe(el));
+            document.querySelectorAll('.progress-custom-bg').forEach(el => pageScrollObserver.observe(el));
+            cards.forEach(el => pageScrollObserver.observe(el));
+        });
+    </script>
+</body>
+</html>

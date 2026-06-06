@@ -1,0 +1,332 @@
+/* ==========================================================================
+   1. GLOBAL STYLES & VARIABLES
+   ========================================================================== */
+:root {
+    --primary-maroon: #730903;
+    --secondary-maroon: #be7777;
+    --dark-text: #444444;
+    --light-bg: #f8f9fa;
+    --white: #ffffff;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background-color: #f4f5f7;
+    color: var(--dark-text);
+    overflow-x: hidden;
+}
+
+/* ==========================================================================
+   2. NAVBAR CUSTOM STYLES
+   ========================================================================== */
+.navbar-custom {
+    background-color: var(--primary-maroon) !important;
+    padding: 12px 0;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.navbar-custom .navbar-brand {
+    color: var(--white) !important;
+    font-weight: 700;
+    font-size: 1.2rem;
+    letter-spacing: 0.5px;
+    line-height: 1.2;
+}
+
+.navbar-custom .navbar-brand span {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 400;
+    color: #fccbcb;
+}
+
+.navbar-custom .nav-link {
+    color: rgba(255, 255, 255, 0.85) !important;
+    font-weight: 600;
+    font-size: 0.95rem;
+    padding: 8px 16px !important;
+    border-radius: 20px;
+    transition: all 0.3s ease;
+}
+
+.navbar-custom .nav-link:hover,
+.navbar-custom .nav-link.active {
+    color: var(--white) !important;
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* Dropdown Menu styling */
+.navbar-custom .dropdown-menu {
+    border: none;
+    border-radius: 12px;
+    background-color: var(--white);
+    padding: 10px;
+}
+
+.navbar-custom .dropdown-item {
+    color: var(--dark-text);
+    font-weight: 500;
+    padding: 8px 16px;
+    border-radius: 8px;
+    transition: all 0.2s ease;
+}
+
+.navbar-custom .dropdown-item:hover {
+    background-color: var(--light-bg);
+    color: var(--primary-maroon);
+}
+
+/* ==========================================================================
+   3. LAYOUT & CONTAINER UTAMA (BOX KONTEN)
+   ========================================================================== */
+.main-content-section {
+    padding: 40px 0 80px 0;
+}
+
+.custom-content-box {
+    background-color: var(--white);
+    border-top: 5px solid var(--primary-maroon);
+    border-radius: 16px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+    padding: 40px;
+    margin-bottom: 30px;
+}
+
+.page-main-title {
+    color: var(--primary-maroon);
+    font-weight: 700;
+    font-size: 1.8rem;
+    letter-spacing: 0.5px;
+}
+
+.dashed-line {
+    border-top: 2px dashed #e0e0e0;
+    margin: 20px 0 30px 0;
+    width: 100%;
+}
+
+.text-maroon {
+    color: var(--primary-maroon) !important;
+}
+
+/* ==========================================================================
+   4. STRUKTUR SOTK (TAB NAVIGASI & FOTO)
+   ========================================================================== */
+/* Wadah Tombol Navigasi Kategori Lembaga */
+.sotk-menu-container {
+    gap: 8px;
+    margin-bottom: 30px;
+}
+
+.sotk-btn-tab {
+    color: var(--dark-text) !important;
+    font-weight: 600;
+    font-size: 0.88rem;
+    border-radius: 30px !important;
+    padding: 8px 20px;
+    transition: all 0.2s ease;
+    background-color: var(--light-bg);
+    border: 1px solid #dee2e6 !important;
+    white-space: nowrap;
+}
+
+.sotk-btn-tab:hover {
+    background-color: #eaeaea;
+}
+
+.sotk-btn-tab.active {
+    background-color: var(--primary-maroon) !important;
+    color: var(--white) !important;
+    border-color: var(--primary-maroon) !important;
+    box-shadow: 0 4px 12px rgba(115, 9, 3, 0.25);
+}
+
+/* Grid & Kartu Foto Struktur Organisasi */
+.sotk-wrapper {
+    padding: 20px 0;
+}
+
+.sotk-card {
+    background: var(--white);
+    border: 1px solid #e2e8f0;
+    border-radius: 12px;
+    padding: 12px;
+    text-align: center;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.02);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.sotk-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.06);
+}
+
+.sotk-img-container {
+    width: 100%;
+    aspect-ratio: 3 / 4;
+    background-color: #e3f2fd; /* Warna placeholder cerah jika foto belum ada */
+    border-radius: 8px;
+    overflow: hidden;
+    margin-bottom: 12px;
+}
+
+.sotk-img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.sotk-name-tag {
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: #2d3748;
+    line-height: 1.3;
+}
+
+/* List Khusus Tampilan BPD */
+.bpd-box-list li {
+    padding: 14px 18px;
+    border-bottom: 1px dashed #e2e8f0;
+    font-size: 0.95rem;
+}
+
+.bpd-box-list li:last-child {
+    border-bottom: none;
+}
+
+/* ==========================================================================
+   5. TABEL DATA (RT, RW, PKK, DLL)
+   ========================================================================== */
+.table {
+    font-size: 0.92rem;
+}
+
+.table-dark {
+    background-color: #2d3748 !important;
+    border-color: #2d3748 !important;
+}
+
+.table-dark th {
+    font-weight: 600;
+    padding: 12px;
+    text-transform: uppercase;
+    font-size: 0.82rem;
+    letter-spacing: 0.5px;
+}
+
+.table-striped tbody tr:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, 0.015);
+}
+
+/* Pembatas Tinggi Box Tabel Panjang (Sistem Scroll) */
+.scrollable-table-box {
+    max-height: 520px;
+    overflow-y: auto;
+    border-radius: 10px;
+    border: 1px solid #dee2e6;
+    box-shadow: inset 0 0 8px rgba(0,0,0,0.02);
+}
+
+.sticky-table-head {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+}
+
+/* ==========================================================================
+   6. FLOATING WIDGET PENGADUAN WIDGET
+   ========================================================================== */
+.floating-pengaduan {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    z-index: 999;
+    width: 150px;
+    transition: width 0.3s ease;
+}
+
+.btn-trigger-pengaduan {
+    background-color: var(--primary-maroon) !important;
+    color: var(--white) !important;
+    font-weight: 600;
+    border-radius: 30px !important;
+    padding: 10px 20px !important;
+    box-shadow: 0 4px 15px rgba(115, 9, 3, 0.4);
+    border: none;
+}
+
+.card-pengaduan {
+    position: absolute;
+    bottom: 55px;
+    right: 0;
+    width: 280px;
+    border: none;
+    border-radius: 14px;
+    overflow: hidden;
+    display: none; /* Dikontrol via JavaScript main.js */
+    transform-origin: bottom right;
+    animation: popIn 0.25s ease-out;
+}
+
+@keyframes popIn {
+    0% { transform: scale(0.8); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+/* ==========================================================================
+   7. FOOTER STYLES
+   ========================================================================== */
+.main-footer {
+    background-color: #1a202c;
+    color: #a0aec0;
+    font-size: 0.88rem;
+    padding: 50px 0 20px 0;
+    border-top: 4px solid var(--primary-maroon);
+}
+
+.main-footer h5 {
+    color: var(--white);
+    font-weight: 600;
+    margin-bottom: 20px;
+    font-size: 1.05rem;
+}
+
+.main-footer a {
+    color: #a0aec0;
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.main-footer a:hover {
+    color: var(--white);
+}
+
+.footer-bottom {
+    border-top: 1px solid #2d3748;
+    margin-top: 40px;
+    padding-top: 20px;
+    font-size: 0.8rem;
+}
+
+/* ==========================================================================
+   8. MEDIA QUERIES (RESPONSIVENESS)
+   ========================================================================== */
+@media (max-width: 768px) {
+    .custom-content-box {
+        padding: 20px;
+    }
+    
+    .page-main-title {
+        font-size: 1.4rem;
+    }
+    
+    .sotk-btn-tab {
+        font-size: 0.8rem;
+        padding: 6px 14px;
+    }
+    
+    .floating-pengaduan {
+        bottom: 15px;
+        right: 15px;
+    }
+}

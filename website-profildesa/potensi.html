@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desa Binorong - Potensi Desa</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .potensi-hero-bg {
+            position: relative;
+            background: url('assets/images/bg/bgpotensi.png') no-repeat center center;
+            background-size: cover;
+            min-height: calc(100vh - 70px);
+            padding: 60px 0;
+            display: flex;
+            align-items: center;
+        }
+
+        .potensi-hero-bg::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.25);
+            z-index: 1;
+        }
+
+        .potensi-container {
+            position: relative;
+            z-index: 2;
+        }
+
+        .shadow-title-potensi {
+            font-size: 3.2rem;
+            font-weight: 800;
+            color: #ffffff;
+            text-shadow: 3px 5px 10px rgba(0, 0, 0, 0.6);
+            letter-spacing: 1px;
+        }
+
+        .glass-box-potensi {
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 16px;
+            padding: 30px;
+            color: #411111;
+            font-weight: 600;
+            line-height: 1.7;
+            max-width: 900px;
+            margin: 0 auto 50px auto;
+            box-shadow: 0 10px 32px rgba(0, 0, 0, 0.15);
+            text-align: justify;
+            
+            /* Animasi Box Glass langsung jalan saat halaman dimuat */
+            opacity: 0;
+            animation: potensiFadeInUp 0.8s ease-out forwards;
+            animation-delay: 0.2s;
+        }
+
+        .menu-potensi-bar {
+            background-color: #730903;
+            border-radius: 16px;
+            padding: 15px 10px;
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
+        }
+
+        .nav-potensi {
+            position: relative;
+            border-bottom: 3px solid rgba(255, 255, 255, 0.3);
+            padding-bottom: 5px;
+        }
+
+        .nav-potensi .nav-item {
+            flex: 1;
+            text-align: center;
+        }
+
+        .nav-potensi .nav-link {
+            color: #ffffff !important;
+            font-weight: 600;
+            font-size: 0.9rem;
+            background: none !important;
+            border: none !important;
+            padding: 12px 5px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        .nav-potensi .nav-link i {
+            font-size: 1.8rem;
+            transition: transform 0.3s ease;
+        }
+
+        .nav-potensi .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -7px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background-color: transparent;
+            border-radius: 2px;
+            transition: background-color 0.3s ease;
+        }
+
+        .nav-potensi .nav-link:hover i {
+            transform: translateY(-3px);
+        }
+
+        .nav-potensi .nav-link:hover::after,
+        .nav-potensi .nav-link.active::after {
+            background-color: #ffca28;
+        }
+
+        .seksi-jenis-potensi {
+            background-color: #fcf8f7;
+            padding: 60px 0;
+        }
+        .judul-sub-potensi {
+            color: #730903;
+            font-weight: 700;
+            position: relative;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+        .kartu-jenis-potensi {
+            background: #ffffff;
+            border: 1px solid #eed6d5;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(115, 9, 3, 0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%;
+        }
+        .kartu-jenis-potensi:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(115, 9, 3, 0.1);
+        }
+        .list-potensi-detail {
+            list-style: none;
+            padding-left: 0;
+            margin-bottom: 0;
+        }
+        .list-potensi-detail li {
+            position: relative;
+            padding-left: 30px;
+            margin-bottom: 14px;
+            text-align: justify;
+        }
+        .list-potensi-detail li::before {
+            content: "\f00c";
+            font-family: "Font Awesome 6 Free";
+            font-weight: 900;
+            position: absolute;
+            left: 0;
+            top: 2px;
+            color: #730903;
+            font-size: 0.95rem;
+        }
+
+        .modal-custom-potensi .modal-content {
+            border-radius: 20px;
+            border: none;
+            overflow: hidden;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.4);
+        }
+
+        .modal-custom-potensi .modal-header {
+            border-bottom: 2px dashed #eed6d5;
+            padding: 20px 25px;
+        }
+
+        .modal-custom-potensi .modal-title {
+            color: #730903;
+            font-weight: 700;
+            font-size: 1.4rem;
+        }
+
+        .modal-custom-potensi .btn-close-custom {
+            background: #000000;
+            color: #ffffff;
+            border: none;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            transition: opacity 0.2s;
+        }
+        .modal-custom-potensi .btn-close-custom:hover {
+            opacity: 0.8;
+        }
+
+        .modal-custom-potensi .modal-body {
+            padding: 25px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #333333;
+        }
+
+        .potensi-img-frame {
+            width: 100%;
+            height: 100%;
+            min-height: 220px;
+            background-color: #f7f9fa;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            color: #a0aec0;
+        }
+        .potensi-img-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 14px;
+        }
+
+        .modal-scroll-table {
+            max-height: 250px;
+            overflow-y: auto;
+            margin-top: 10px;
+            border: 1px solid #dee2e6;
+            border-radius: 8px;
+        }
+
+        .footer-desa-resmi {
+            background-color: #730903 !important;
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+        }
+  
+        .tracking-wider {
+            letter-spacing: 0.5px;
+        }
+
+        .email-footer-link {
+            transition: color 0.2s ease, text-decoration 0.2s ease;
+        }
+
+        .email-footer-link:hover {
+            color: #be7777 !important;
+            text-decoration: underline !important;
+        }
+
+        @keyframes potensiFadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes potensiFadeInLeft {
+            from { opacity: 0; transform: translateX(-40px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        @keyframes potensiFadeInRight {
+            from { opacity: 0; transform: translateX(40px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .scroll-animasi-kiri,
+        .scroll-animasi-kanan {
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .scroll-animasi-kiri.aktif-animasi {
+            animation: potensiFadeInLeft 0.8s ease-out forwards;
+        }
+
+        .scroll-animasi-kanan.aktif-animasi {
+            animation: potensiFadeInRight 0.8s ease-out forwards;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="beranda.html">
+                <img src="assets/images/bg/LogoKabBna.png" alt="Logo" width="40" class="me-2">
+                <div>DESA BINORONG<span>Kec. Bawang Kab. Banjarnegara</span></div>
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <i class="fa-solid fa-bars text-white"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item"><a class="nav-link" href="beranda.html">Beranda</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Profil</a>
+                        <ul class="dropdown-menu shadow">
+                            <li><a class="dropdown-item" href="profil/sejarah.html">Sejarah</a></li>
+                            <li><a class="dropdown-item" href="profil/visi-misi.html">Visi Misi</a></li>
+                            <li><a class="dropdown-item" href="profil/peta.html">Peta Desa</a></li>
+                            <li><a class="dropdown-item" href="profil/geografis.html">Kondisi Geografis</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="sotk/organisasi.html">SOTK</a></li>
+                    <li class="nav-item"><a class="nav-link" href="statistik.html">Statistik</a></li>
+                    <li class="nav-item"><a class="nav-link" href="umkm.html">UMKM</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="potensi.html">Potensi</a></li>
+                    <li class="nav-item"><a class="nav-link" href="album.html">Album</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="potensi-hero-bg">
+        <div class="container potensi-container">
+            
+            <div class="text-center mb-4">
+                <h1 class="shadow-title-potensi text-uppercase">Potensi Desa Binorong</h1>
+            </div>
+
+            <div class="glass-box-potensi">
+                Potensi desa adalah keseluruhan sumber daya alam, manusia, kelembagaan, dan budaya yang dimiliki suatu desa. Sebagai modal dasar, potensi ini dikelola dan dikembangkan untuk meningkatkan kesejahteraan masyarakat, memperkuat ekonomi lokal, serta mendukung pembangunan daerah.
+            </div>
+
+            <div class="row justify-content-center">
+                <div class="col-xl-10">
+                    <div class="menu-potensi-bar">
+                        <ul class="nav nav-potensi justify-content-between" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#modalSda">
+                                    <i class="fa-solid fa-seedling"></i>
+                                    <span>SDA</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#modalSarpras">
+                                    <i class="fa-solid fa-building"></i>
+                                    <span>Sarana & Prasarana</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#modalPerhubungan">
+                                    <i class="fa-solid fa-road"></i>
+                                    <span>Perhubungan</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#modalIrigasi">
+                                    <i class="fa-solid fa-faucet-drip"></i>
+                                    <span>Irigasi</span>
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#modalPemukiman">
+                                    <i class="fa-solid fa-house-chimney"></i>
+                                    <span>Pemukiman</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <section class="seksi-jenis-potensi">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="fw-bold text-uppercase" style="color: #730903; letter-spacing: 1px;">Jenis-Jenis Potensi Desa</h2>
+                <p class="text-muted mx-auto" style="max-width: 700px;">Adapun jenis-jenis potensi yang dimiliki and menjadi pilar penting bagi kemajuan wilayah meliputi aspek fisik maupun non-fisik.</p>
+            </div>
+
+            <div class="row g-4 justify-content-center">
+                <div class="col-lg-6 scroll-animasi-kiri">
+                    <div class="card kartu-jenis-potensi p-4">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="bg-light p-3 rounded-circle me-3" style="color: #730903;">
+                                    <i class="fa-solid fa-mountain-sun fa-2x"></i>
+                                </div>
+                                <h4 class="judul-sub-potensi m-0">1. Potensi Fisik Desa</h4>
+                            </div>
+                            <p class="text-muted text-justify small mb-4">Potensi fisik adalah segala unsur sumber daya alam dan lingkungan fisik yang menjadi modal dasar pembangunan. Komponen utamanya meliputi:</p>
+                            
+                            <ul class="list-potensi-detail small">
+                                <li><strong>Tanah:</strong> Lahan pertanian, perkebunan, atau pertambangan yang menjadi roda penggerak ekonomi utama di pedesaan.</li>
+                                <li><strong>Air:</strong> Sumber mata air, sungai, and danau yang vital untuk irigasi, perikanan, dan kebutuhan sehari-hari.</li>
+                                <li><strong>Iklim dan Cuaca:</strong> Sangat memengaruhi pola tanam dan jenis komoditas yang bisa dihasilkan.</li>
+                                <li><strong>Ternak dan Flora/Fauna:</strong> Keanekaragaman hayati dan hewan ternak yang bernilai ekonomi.</li>
+                                <li><strong>Manusia (Fisik):</strong> Jumlah, usia produktif, dan tenaga kerja yang siap mengolah sumber daya alam.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6 scroll-animasi-kanan">
+                    <div class="card kartu-jenis-potensi p-4">
+                        <div class="card-body">
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="bg-light p-3 rounded-circle me-3" style="color: #730903;">
+                                    <i class="fa-solid fa-users-gear fa-2x"></i>
+                                </div>
+                                <h4 class="judul-sub-potensi m-0">2. Potensi Non-Fisik Desa</h4>
+                            </div>
+                            <p class="text-muted text-justify small mb-4">Potensi non-fisik adalah segala unsur sosial, budaya, dan kelembagaan yang ada di masyarakat dan menjadi penggerak keberhasilan desa. Komponen utamanya meliputi:</p>
+                            
+                            <ul class="list-potensi-detail small">
+                                <li><strong>Masyarakat dan Gotong Royong:</strong> Semangat saling membantu yang menjadi kekuatan utama dalam menyelesaikan pekerjaan atau pembangunan desa.</li>
+                                <li><strong>Lembaga Sosial:</strong> Organisasi lokal seperti Karang Taruna, PKK, Kelompok Tani, dan Lembaga Pemberdayaan Masyarakat (LPM) yang membantu berjalannya program desa.</li>
+                                <li><strong>Adat Istiadat dan Tradisi:</strong> Kearifan lokal, seni budaya, dan sistem nilai yang jika dikelola dengan baik dapat menjadi daya tarik pariwisata.</li>
+                                <li><strong>Aparatur Desa:</strong> Sumber daya manusia pengelola pemerintahan desa yang memiliki kapasitas untuk memimpin, merencanakan, dan mengeksekusi pembangunan.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="modal fade modal-custom-potensi" id="modalSda" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header d-flex justify-content-between align-items-center">
+                    <h5 class="modal-title"><i class="fa-solid fa-seedling me-2 text-success"></i>Sumber Daya Alam (SDA)</h5>
+                    <button type="button" class="btn-close-custom" data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row g-4">
+                        <div class="col-md-7 text-justify" style="max-height: 380px; overflow-y: auto;">
+                            <p>Berdasarkan hasil pendataan KK Miskin di tingkat desa, jumlah KK Miskin di Desa Binorong adalah 721 KK dengan 2.208 jumlah jiwa. Data tersebut akan terus diperbaharui dengan tujuan agar program-program yang diberikan pemerintah untuk pengentasan kemiskinan dapat disalurkan dengan tepat sasaran.</p>
+                            <p>Sumber daya alam yang pemanfaatannya bisa dioptimalkan adalah sektor pertanian, perkebunan, peternakan, perikanan dan perdagangan.</p>
+                            <ul>
+                                <li><strong>Lahan Pertanian:</strong> Terdiri dari dua macam yaitu pertanian sawah irigasi teknis dengan tiga musim tanam yaitu (padi-padi-palawija) dan semi teknis atau balong dengan dua musim tanam yaitu (padi-padi), serta pertanian lahan kering atau tegalan dengan jenis komoditas utama yaitu tanaman sayuran diantaranya cabai, terong dan kacang panjang.</li>
+                                <li><strong>Perkebunan:</strong> Komoditas yang dibudidayakan adalah tanaman keras dengan jenis tanaman diantaranya kayu tahun, tanaman buah-buahan/hortikultura, rempah-rempah dan bambu.</li>
+                                <li><strong>Peternakan:</strong> menghasilkan pangan bernilai gizi tinggi, membuka lapangan kerja baru, serta menghasilkan produk sampingan seperti pupuk organik. diantaranya adalah sapi, kambing, domba, dan beberapa jenis unggas seperti ayam kampung, ayam petelur dan bebek.</li>
+                                <li><strong>Perikanan Air Tawar:</strong> Budidaya komoditas gurame, nila, ikan mas, dan lele.</li>
+                                <li><strong>Perdagangan:</strong> Sentra niaga sembako, kelontong, serta distribusi hasil bumi pertanian dan perkebunan setempat.</li>
+                            </ul>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="potensi-img-frame">
+                                <img src="assets/images/potensi/sda.png" alt="Dokumentasi SDA Desa">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade modal-custom-potensi" id="modalSarpras" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header d-flex justify-content-between align-items-center">
+                    <h5 class="modal-title"><i class="fa-solid fa-building me-2 text-primary"></i>Sarana & Prasarana Kesehatan</h5>
+                    <button type="button" class="btn-close-custom" data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row g-4">
+                        <div class="col-md-7">
+                            <p>Sarana dan prasarana desa difungsikan untuk mendukung kehidupan dan aktivitas masyarakat. Fasilitas ini bertujuan memperlancar mobilitas, memenuhi kebutuhan dasar, mempercepat proses kerja, serta mewujudkan kemandirian wilayah.</p>
+                            <h6 class="fw-bold mt-3 text-dark">Data Dukung Kesehatan Penduduk:</h6>
+                            <table class="table table-sm table-striped table-bordered align-middle">
+                                <thead class="table-dark small text-center">
+                                    <tr><th>Fasilitas / Tenaga Medis</th><th style="width: 25%;">Kuantitas</th></tr>
+                                </thead>
+                                <tbody class="small">
+                                    <tr><td>Bidan Desa Resmi</td><td class="text-center fw-bold">1 Orang</td></tr>
+                                    <tr><td>Bidan Praktek Mandiri</td><td class="text-center fw-bold">2 Orang</td></tr>
+                                    <tr><td>Tenaga SKD</td><td class="text-center fw-bold">1 Orang</td></tr>
+                                    <tr><td>Tempat Praktek Bidan Terpadu</td><td class="text-center fw-bold">3 Buah</td></tr>
+                                    <tr><td>Posyandu Balita Sektor Blok</td><td class="text-center fw-bold">5 Buah</td></tr>
+                                    <tr><td>Posyandu Lansia Senior</td><td class="text-center fw-bold">3 Buah</td></tr>
+                                    <tr><td>Tukang Urut / Pijat Tradisional terdata</td><td class="text-center fw-bold">10 Orang</td></tr>
+                                    <tr><td>Dukun Bayi Tradisional</td><td class="text-center text-danger fw-bold">0 Orang</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="potensi-img-frame">
+                                <img src="assets/images/potensi/sarpras.png" alt="Dokumentasi Sarpras Desa">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade modal-custom-potensi" id="modalPerhubungan" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header d-flex justify-content-between align-items-center">
+                    <h5 class="modal-title"><i class="fa-solid fa-road me-2 text-warning"></i>Infrastruktur Perhubungan</h5>
+                    <button type="button" class="btn-close-custom" data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row g-4">
+                        <div class="col-md-7">
+                            <p class="small text-muted mb-2">Kondisi infrastruktur perhubungan desa adalah penilaian terhadap kelayakan dan kualitas fasilitas konektivitas fisik di suatu wilayah pedesaan. Hal ini mencakup tingkat kerusakan, kemantapan jalan, hingga ketersediaan aksesibilitas warga.</p>
+                            <p class="small text-muted mb-2">Infrastruktur ini difungsikan sebagai urat nadi penggerak ekonomi, sosial, dan layanan publik.</p>
+                            <div class="modal-scroll-table">
+                                <table class="table table-sm table-bordered mb-0 align-middle style-table text-center" style="font-size: 0.82rem;">
+                                    <thead class="table-dark sticky-top">
+                                        <tr><th>No</th><th>Uraian Jalur</th><th>Kondisi Baik</th><th>Kondisi Rusak</th><th>Total Panjang</th></tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr class="table-light text-start fw-bold"><td colspan="5">1. Jalan Desa</td></tr>
+                                        <tr><td>-</td><td class="text-start">Aspal</td><td>4.000 m1</td><td>6.050 m1</td><td class="fw-bold">10.050 m1</td></tr>
+                                        <tr><td>-</td><td class="text-start">Rabat Beton</td><td>-</td><td>100 m1</td><td class="fw-bold">100 m1</td></tr>
+                                        <tr><td>-</td><td class="text-start">Makadam</td><td>1.550 m1</td><td>-</td><td class="fw-bold">1.550 m1</td></tr>
+                                        <tr><td>-</td><td class="text-start">Tanah</td><td>700 m1</td><td>-</td><td class="fw-bold">700 m1</td></tr>
+                                        
+                                        <tr class="table-light text-start fw-bold"><td colspan="5">2. Jalan Pertanian</td></tr>
+                                        <tr><td>-</td><td class="text-start">Rabat Beton</td><td>-</td><td>100 m1</td><td class="fw-bold">100 m1</td></tr>
+                                        <tr><td>-</td><td class="text-start">Makadam</td><td>750 m1</td><td>-</td><td class="fw-bold">750 m1</td></tr>
+                                        <tr><td>-</td><td class="text-start">Tanah</td><td>600 m1</td><td>-</td><td class="fw-bold">600 m1</td></tr>
+                                        
+                                        <tr class="table-light text-start fw-bold"><td colspan="5">3. Jembatan Penghubung</td></tr>
+                                        <tr><td>-</td><td class="text-start">Jembatan Beton</td><td>25 Unit</td><td>-</td><td class="fw-bold">25 Unit</td></tr>
+                                        <tr><td>-</td><td class="text-start">Jembatan Kayu</td><td>8 Unit</td><td>-</td><td class="fw-bold">8 Unit</td></tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="potensi-img-frame">
+                                <img src="assets/images/potensi/perhubungan.png" alt="Dokumentasi Perhubungan Desa">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade modal-custom-potensi" id="modalIrigasi" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header d-flex justify-content-between align-items-center">
+                    <h5 class="modal-title"><i class="fa-solid fa-faucet-drip me-2 text-info"></i>Infrastruktur Jaringan Irigasi</h5>
+                    <button type="button" class="btn-close-custom" data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row g-4">
+                        <div class="col-md-7">
+                            <p>Infrastruktur ini difungsikan untuk mengalirkan dan membagikan air dari sumbernya (seperti sungai atau waduk) langsung ke area pertanian and persawahan milik warga Desa Binorong.</p>
+                            <table class="table table-sm table-bordered mt-3 text-center align-middle" style="font-size: 0.88rem;">
+                                <thead class="table-dark">
+                                    <tr><th>No</th><th class="text-start">Uraian Jaringan</th><th>Kondisi Baik</th><th>Kondisi Rusak</th><th>Total Volume</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>1</td><td class="text-start">Saluran Primer</td><td>-</td><td>500 m1</td><td class="fw-bold">500 m1</td></tr>
+                                    <tr><td>2</td><td class="text-start">Saluran Sekunder</td><td>500 m1</td><td>1.500 m1</td><td class="fw-bold">2.000 m1</td></tr>
+                                    <tr><td>3</td><td class="text-start">Saluran Tersier</td><td>3.000 m1</td><td>-</td><td class="fw-bold">3.000 m1</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="potensi-img-frame">
+                                <img src="assets/images/potensi/irigasi.png" alt="Dokumentasi Irigasi Desa">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade modal-custom-potensi" id="modalPemukiman" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header d-flex justify-content-between align-items-center">
+                    <h5 class="modal-title"><i class="fa-solid fa-house-chimney me-2 text-danger"></i>Kondisi Infrastruktur Pemukiman</h5>
+                    <button type="button" class="btn-close-custom" data-bs-dismiss="modal"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+                <div class="modal-body">
+                    <div class="row g-4">
+                        <div class="col-md-7">
+                            <p>Infrastruktur pemukiman desa adalah fasilitas fisik dasar dan sistem lingkungan yang dibutuhkan agar sebuah kawasan tempat tinggal di desa dapat berfungsi dengan layak, aman, dan sehat.</p>
+                            <h6 class="fw-bold mt-3 text-dark">Data Rumah Tinggal Sasaran Pembenahan:</h6>
+                            <div class="p-3 bg-light rounded border">
+                                <div class="d-flex justify-content-between align-items-center mb-2 pb-2 border-bottom">
+                                    <span><i class="fa-solid fa-triangle-exclamation text-warning me-2"></i>Rumah Tidak Sehat</span>
+                                    <span class="badge bg-warning text-dark fs-7 px-3">200 Rumah</span>
+                                </div>
+                                <div class="d-flex justify-content-between align-items-center">
+                                    <span><i class="fa-solid fa-house-medical-circle-exclamation text-danger me-2"></i>Rumah Tidak Layak Huni (RTLH)</span>
+                                    <span class="badge bg-danger fs-7 px-3">50 Rumah</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-5">
+                            <div class="potensi-img-frame">
+                                <img src="assets/images/potensi/pemukiman.png" alt="Dokumentasi Pemukiman Desa">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer-desa-resmi text-white py-4 mt-5">
+        <div class="container">
+            <div class="row align-items-center mb-4">
+                <div class="col-md-7 d-flex align-items-start mb-3 mb-md-0">
+                    <img src="/website-profildesa/assets/images/bg/LogoKabBna.png" alt="Logo Kabupaten" class="img-fluid me-3" style="width: 110px; height: auto;">
+                    <div>
+                        <h4 class="fw-bold text-uppercase tracking-wider mb-1" style="font-size: 18px;">Desa Binorong</h4>
+                        <p class="small text-white-50 mb-2 lh-base" style="font-size: 13px;">
+                            Jl. Ketewel, Desa Binorong,<br>
+                            Kecamatan Bawang, Kabupaten Banjarnegara
+                        </p>
+                        <span class="badge bg-white text-dark fw-bold px-3 py-1.5" style="border-radius: 20px; font-size: 11px; letter-spacing: 0.5px;">
+                            Kode Wilayah: 33.04.05.2012
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-md-5 text-md-end d-flex flex-column align-items-md-end align-items-start">
+                    <span class="fw-semibold text-white-50 mb-2" style="font-size: 14px;">Hubungi Kami</span>
+                    <div class="mb-2" style="font-size: 14px;">
+                        <i class="fa-solid fa-phone me-1.5 text-white-50"></i> 
+                        <span class="text-white">-</span>
+                    </div>
+                    <div style="font-size: 14px;">
+                        <a href="mailto:desabinorong@gmail.com" target="_blank" class="text-white text-decoration-none email-footer-link">
+                            <i class="fa-solid fa-envelope me-1.5 text-white-50"></i> desabinorong@gmail.com
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <hr style="border-color: rgba(255, 255, 255, 0.15); margin: 0 0 20px 0;">
+
+            <div class="row">
+                <div class="col-12 text-center">
+                    <p class="small mb-0 text-white-50" style="font-size: 12px; letter-spacing: 0.3px;">
+                        &copy; Copyright 2026. All Rights Reserved by Naeva | Made with ❤️
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/main.js"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const elemenKiri = document.querySelector('.scroll-animasi-kiri');
+            const elemenKanan = document.querySelector('.scroll-animasi-kanan');
+
+            const options = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.15
+            };
+
+            const observer = new IntersectionObserver(function (entries, observer) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('aktif-animasi');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, options);
+
+            if(elemenKiri) observer.observe(elemenKiri);
+            if(elemenKanan) observer.observe(elemenKanan);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desa Binorong - Galeri Dokumentasi</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body {
+            background: linear-gradient(to right, #ede6e9, #f5eff2);
+            background-attachment: fixed;
+        }
+
+        .album-section {
+            padding: 50px 0;
+        }
+
+        .shadow-title-album {
+            font-size: 2.8rem;
+            font-weight: 800;
+            color: #ffffff;
+            text-shadow: 3px 4px 8px rgba(0, 0, 0, 0.4);
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+        }
+
+        .subtitle-album {
+            font-size: 1.1rem;
+            color: #730903;
+            font-weight: 600;
+            margin-bottom: 40px;
+        }
+
+        .galeri-card {
+            background: #ffffff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+            border: none;
+            margin-bottom: 30px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .galeri-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+        }
+
+        .galeri-img-wrapper {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .galeri-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .galeri-desc-box {
+            background-color: #730903;
+            padding: 12px 15px;
+            text-align: center;
+            min-height: 55px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .galeri-desc-box p {
+            color: #ffffff;
+            font-size: 0.88rem;
+            font-weight: 600;
+            margin: 0;
+            line-height: 1.3;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .video-card-wrapper {
+            border-radius: 16px;
+            overflow: hidden;
+            background: #ffffff;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+        }
+
+        .footer-desa-resmi {
+        background-color: #730903 !important;
+        font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+        }
+  
+        .tracking-wider {
+        letter-spacing: 0.5px;
+        }
+
+        .email-footer-link {
+        transition: color 0.2s ease, text-decoration 0.2s ease;
+        }
+
+        .email-footer-link:hover {
+        color: #be7777 !important;
+        text-decoration: underline !important;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="beranda.html">
+                <img src="assets/images/bg/LogoKabBna.png" alt="Logo" width="40" class="me-2">
+                <div>DESA BINORONG<span>Kec. Bawang Kab. Banjarnegara</span></div>
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <i class="fa-solid fa-bars text-white"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item"><a class="nav-link" href="beranda.html">Beranda</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">Profil</a>
+                        <ul class="dropdown-menu shadow">
+                            <li><a class="dropdown-item" href="profil/sejarah.html">Sejarah</a></li>
+                            <li><a class="dropdown-item" href="profil/visi-misi.html">Visi Misi</a></li>
+                            <li><a class="dropdown-item" href="profil/peta.html">Peta Desa</a></li>
+                            <li><a class="dropdown-item" href="profil/geografis.html">Kondisi Geografis</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="sotk/organisasi.html">SOTK</a></li>
+                    <li class="nav-item"><a class="nav-link" href="statistik.html">Statistik</a></li>
+                    <li class="nav-item"><a class="nav-link" href="umkm.html">UMKM</a></li>
+                    <li class="nav-item"><a class="nav-link" href="potensi.html">Potensi</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="album.html">Album</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="container album-section">
+        
+        <div class="text-center">
+            <h1 class="shadow-title-album text-uppercase">GALERI DOKUMENTASI DESA</h1>
+            <p class="subtitle-album">-- Galeri kegiatan, musyawarah, dan perayaan di lingkungan Desa Binorong --</p>
+        </div>
+
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            
+            <div class="col">
+                <div class="galeri-card">
+                    <div class="galeri-img-wrapper">
+                        <img src="assets/images/album/keg1.png" alt="kegiatan" class="img-fluid galeri-img">
+                    </div>
+                    <div class="galeri-desc-box">
+                        <p>Tim Karang Taruna Desa Binorong kompak melaksanakan kerja bakti normalisasi lapangan Lima Oktober.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="galeri-card">
+                    <div class="galeri-img-wrapper">
+                        <img src="assets/images/album/keg2.png" alt="kegiatan" class="img-fluid galeri-img">
+                    </div>
+                    <div class="galeri-desc-box">
+                        <p>Keseruan Perlombaan Antar-Warga Desa Binorong Sebagai Wujud Nyata Guyub Rukun dan Solidaritas Masyarakat.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="galeri-card">
+                    <div class="galeri-img-wrapper">
+                        <img src="assets/images/album/keg3.jpeg" alt="kegiatan" class="img-fluid galeri-img">
+                    </div>
+                    <div class="galeri-desc-box">
+                        <p>Kegiatan Kaposkampling dalam rangka meningkatkan kesadaran dan partisipasi masyarakat dalam Harkamtibmas.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="galeri-card">
+                    <div class="galeri-img-wrapper">
+                        <img src="assets/images/album/keg4.jpeg" alt="kegiatan" class="img-fluid galeri-img">
+                    </div>
+                    <div class="galeri-desc-box">
+                        <p>Kemeriahan dan antusiasme warga dalam mengikuti takbir keliling sebagai bentuk syiar islam pada Hari Raya Idul Adha.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="galeri-card">
+                    <div class="galeri-img-wrapper">
+                        <img src="assets/images/album/keg5.png" alt="kegiatan" class="img-fluid galeri-img">
+                    </div>
+                    <div class="galeri-desc-box">
+                        <p>Penyerahan medali dan sertifikat KEJURDA tapak suci VIII 2024 | Tapak Suci Putera Muhammadiyah Binorong.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="galeri-card">
+                    <div class="galeri-img-wrapper">
+                        <img src="assets/images/album/keg6.png" alt="kegiatan" class="img-fluid galeri-img">
+                    </div>
+                    <div class="galeri-desc-box">
+                        <p>Pemasangan plang dilarang membuang sampah ke sungai dan sekitar pemukiman demi mewujudkan lingkungan sehat.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="galeri-card">
+                    <div class="galeri-img-wrapper">
+                        <img src="assets/images/album/keg7.png" alt="kegiatan" class="img-fluid galeri-img">
+                    </div>
+                    <div class="galeri-desc-box">
+                        <p>Suasana kegiatan pengajian akbar dalam rangka tahun baru Hijriah ke 1444 di balai desa Binorong.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col">
+                <div class="galeri-card">
+                    <div class="galeri-img-wrapper">
+                        <img src="assets/images/album/keg8.png" alt="kegiatan" class="img-fluid galeri-img">
+                    </div>
+                    <div class="galeri-desc-box">
+                        <p>Kegiatan donor darah rutin dan pendonor darah baru dari program kerja rutin karang taruna desa binorong.</p>
+                    </div>
+                </div>
+            </div>
+
+           <div class="col">
+                <div class="galeri-card">
+                    <div class="galeri-img-wrapper">
+                        <img src="assets/images/album/keg9.png" alt="kegiatan" class="img-fluid galeri-img">
+                    </div>
+                    <div class="galeri-desc-box">
+                        <p>Sosialisasi pelestarian kesenian tradisional Banjarnegara bersama Anggota DPRD Jawa Tengah, Zaki Mubarok.</p>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="row mt-2">
+            <div class="col-12">
+                <div class="video-card-wrapper p-3">
+                    <h5 class="fw-bold mb-3 text-uppercase text-center text-md-start" style="color: #730903;">
+                        <i class="fa-brands fa-youtube text-danger me-2"></i> Dokumentasi Video Kegiatan Desa : KARNAVAL DESA BINORONG 2017
+                    </h5>
+                    <div class="ratio ratio-16x9">
+                       <iframe src="https://www.youtube.com/embed/a3KUS1fSrlw" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer-desa-resmi text-white py-4 mt-5">
+        <div class="container">
+            <div class="row align-items-center mb-4">
+            
+                <div class="col-md-7 d-flex align-items-start mb-3 mb-md-0">
+                    <img src="/website-profildesa/assets/images/bg/LogoKabBna.png" alt="Logo Kabupaten" class="img-fluid me-3" style="width: 110px; height: auto;">
+                    <div>
+                        <h4 class="fw-bold text-uppercase tracking-wider mb-1" style="font-size: 18px;">Desa Binorong</h4>
+                        <p class="small text-white-50 mb-2 lh-base" style="font-size: 13px;">
+                            Jl. Ketewel, Desa Binorong,<br>
+                            Kecamatan Bawang, Kabupaten Banjarnegara
+                        </p>
+                        <span class="badge bg-white text-dark fw-bold px-3 py-1.5" style="border-radius: 20px; font-size: 11px; letter-spacing: 0.5px;">
+                            Kode Wilayah: 33.04.05.2012
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-md-5 text-md-end d-flex flex-column align-items-md-end align-items-start">
+                    <span class="fw-semibold text-white-50 mb-2" style="font-size: 14px;">Hubungi Kami</span>
+                
+                    <div class="mb-2" style="font-size: 14px;">
+                        <i class="fa-solid fa-phone me-1.5 text-white-50"></i> 
+                        <span class="text-white">-</span>
+                    </div>
+                
+                    <div style="font-size: 14px;">
+                        <a href="mailto:desabinorong@gmail.com" target="_blank" class="text-white text-decoration-none email-footer-link">
+                            <i class="fa-solid fa-envelope me-1.5 text-white-50"></i> desabinorong@gmail.com
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <hr style="border-color: rgba(255, 255, 255, 0.15); margin: 0 0 20px 0;">
+
+            <div class="row">
+                <div class="col-12 text-center">
+                    <p class="small mb-0 text-white-50" style="font-size: 12px; letter-spacing: 0.3px;">
+                        &copy; Copyright 2026. All Rights Reserved by Naeva | Made with ❤️
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>

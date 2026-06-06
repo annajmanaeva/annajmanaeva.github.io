@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desa Binorong - SOTK</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="/website-profildesa/css/style.css"> 
+    
+    <style>
+        body {
+            background-color: #faf4f4;
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+        .main-content-section {
+            padding: 60px 0;
+        }
+       
+        .custom-content-box {
+            background-color: #ffffff;
+            padding: 45px 40px;
+            border-radius: 24px;
+            box-shadow: 0 10px 30px rgba(115, 9, 3, 0.04);
+            border-top: 15px solid #730903;
+            opacity: 0;
+            transform: translateY(15px);
+            animation: fadeInUp 0.8s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+        }
+
+        @keyframes fadeInUp {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .page-main-title {
+            color: #111111;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+        }
+        .dashed-line {
+            border-top: 2px dashed #f0e2e2;
+            margin: 25px 0 35px 0;
+        }
+        
+        .sotk-menu-container {
+            display: grid !important;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+            margin-bottom: 30px;
+            width: 100%;
+        }
+
+        @media (min-width: 768px) {
+            .sotk-menu-container {
+                grid-template-columns: repeat(4, 1fr);
+            }
+        }
+        @media (min-width: 1200px) {
+            .sotk-menu-container {
+                grid-template-columns: repeat(6, 1fr);
+            }
+        }
+
+        .sotk-btn-tab {
+            color: #444444 !important;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border-radius: 30px !important;
+            padding: 8px 12px;
+            transition: all 0.2s ease;
+            background-color: #f8f9fa;
+            border: 1px solid #e0e0e0 !important;
+            text-align: center;
+            width: 100%;
+            white-space: normal !important;
+        }
+
+        .sotk-btn-tab:hover {
+            background-color: #f1f3f5;
+            color: #730903 !important;
+            border-color: #f0d5d5 !important;
+        }
+        .sotk-btn-tab.active {
+            background-color: #730903 !important;
+            color: #ffffff !important;
+            border-color: #730903 !important;
+            box-shadow: 0 6px 15px rgba(115, 9, 3, 0.25);
+        }
+
+        .bpd-box-list {
+            border-radius: 16px !important;
+            border: 1px solid rgba(115, 9, 3, 0.08) !important;
+            background: #ffffff !important;
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.02) !important;
+        }
+        .bpd-box-list li {
+            padding: 15px 20px;
+            border-bottom: 1px dashed #e2c4c4;
+            transition: background 0.2s ease;
+        }
+        .bpd-box-list li:hover {
+            background-color: #fffafb;
+        }
+        .bpd-box-list li:last-child {
+            border-bottom: none;
+        }
+        .bpd-box-list ol li {
+            padding: 6px 0;
+            border-bottom: none;
+        }
+        .bpd-box-list ol li:hover {
+            background: transparent;
+        }
+
+        .table {
+            border-color: #979797;
+        }
+        .table-dark {
+            background-color: #730903 !important;
+            border-color: #979797 !important;
+        }
+        .table-dark th {
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            padding: 14px;
+            background-color: #222222 !important;
+            color: #ffffff !important;
+        }
+        .table-striped tbody tr:nth-of-type(odd) {
+            background-color: rgba(115, 9, 3, 0.015);
+        }
+        .table tbody tr {
+            transition: background-color 0.2s ease;
+        }
+        .table tbody tr:hover {
+            background-color: rgba(115, 9, 3, 0.03) !important;
+        }
+        .table td {
+            padding: 14px;
+            color: #333333;
+            font-size: 0.95rem;
+        }
+
+        .sticky-table-head {
+            position: sticky;
+            top: 0;
+            z-index: 10;
+        }
+        .scrollable-table-box {
+            max-height: 550px; 
+            overflow-y: auto;
+            border-radius: 12px;
+            border: 1px solid #f0e2e2;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.01);
+        }
+
+        .scrollable-table-box::-webkit-scrollbar {
+            width: 6px;
+        }
+        .scrollable-table-box::-webkit-scrollbar-track {
+            background: #f8f9fa;
+        }
+        .scrollable-table-box::-webkit-scrollbar-thumb {
+            background: #c9b2b1;
+            border-radius: 10px;
+        }
+        .scrollable-table-box::-webkit-scrollbar-thumb:hover {
+            background: #730903;
+        }
+
+        .text-maroon {
+            color: #730903;
+        }
+
+        .sotk-card {
+            background: #ffffff;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+            transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s ease;
+            border: 1px solid rgba(115, 9, 3, 0.06);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sotk-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 25px rgba(115, 9, 3, 0.14);
+        }
+
+        .sotk-img-container {
+            width: 100%;
+            aspect-ratio: 1 / 1; 
+            overflow: hidden;
+            background-color: #f8f9fa;
+            position: relative;
+        }
+
+        .sotk-img-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+        }
+
+        .sotk-card:hover .sotk-img-container img {
+            transform: scale(1.05);
+        }
+
+        .sotk-name-tag {
+            padding: 16px 12px;
+            text-align: center;
+            background: #ffffff;
+            font-weight: 700;
+            font-size: 14px;
+            color: #1a1a1a;
+            letter-spacing: 0.3px;
+            border-top: 4px solid #730903;
+            margin-top: auto;
+        }
+
+        .sotk-name-tag small {
+            display: block;
+            margin-top: 6px;
+            color: #666666;
+            font-weight: 500;
+            font-size: 11.5px;
+            text-transform: none;
+        }
+
+        .footer-desa-resmi {
+            background-color: #730903 !important;
+            font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+        }
+  
+        .tracking-wider {
+            letter-spacing: 0.5px;
+        }
+
+        .email-footer-link {
+            transition: color 0.2s ease, text-decoration 0.2s ease;
+        }
+
+        .email-footer-link:hover {
+            color: #be7777 !important;
+            text-decoration: underline !important;
+        }
+    </style>
+</head>
+<body>
+
+   <nav class="navbar navbar-expand-lg navbar-custom sticky-top">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center" href="/website-profildesa/beranda.html">
+                <img src="/website-profildesa/assets/images/bg/LogoKabBna.png" alt="Logo" width="40" class="me-2">
+                <div>DESA BINORONG<span>Kec. Bawang Kab. Banjarnegara</span></div>
+            </a>
+            <button class="navbar-toggler border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <i class="fa-solid fa-bars text-white"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto align-items-center">
+                    <li class="nav-item"><a class="nav-link" href="/website-profildesa/beranda.html">Beranda</a></li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdownProfil" role="button" data-bs-toggle="dropdown" aria-expanded="false">Profil</a>
+                        <ul class="dropdown-menu shadow" aria-labelledby="dropdownProfil">
+                            <li><a class="dropdown-item" href="/website-profildesa/profil/sejarah.html">Sejarah</a></li>
+                            <li><a class="dropdown-item" href="/website-profildesa/profil/visi-misi.html">Visi Misi</a></li>
+                            <li><a class="dropdown-item" href="/website-profildesa/profil/peta.html">Peta Desa</a></li>
+                            <li><a class="dropdown-item" href="/website-profildesa/profil/geografis.html">Kondisi Geografis</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item"><a class="nav-link active" href="sotk/organisasi.html">SOTK</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/website-profildesa/statistik.html">Statistik</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/website-profildesa/umkm.html">UMKM</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/website-profildesa/potensi.html">Potensi</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/website-profildesa/album.html">Album</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="main-content-section">
+        <div class="container">
+            
+            <div class="custom-content-box mb-5">
+                <h2 class="page-main-title text-center mt-2">Struktur Organisasi & Tata Kerja</h2>
+                <div class="dashed-line"></div>
+
+                <div class="d-flex flex-wrap justify-content-center sotk-menu-container nav nav-pills" id="sotk-tabs" role="tablist">
+                    <button class="nav-link sotk-btn-tab active" type="button" role="tab" data-bs-toggle="pill" data-bs-target="#tab-pemdes" aria-controls="tab-pemdes" aria-selected="true">Pemerintah Desa</button>
+                    <button class="nav-link sotk-btn-tab" type="button" role="tab" data-bs-toggle="pill" data-bs-target="#tab-bpd" aria-controls="tab-bpd" aria-selected="false">BPD</button>
+                    <button class="nav-link sotk-btn-tab" type="button" role="tab" data-bs-toggle="pill" data-bs-target="#tab-rtrw" aria-controls="tab-rtrw" aria-selected="false">Ketua RW / RT</button>
+                    <button class="nav-link sotk-btn-tab" type="button" role="tab" data-bs-toggle="pill" data-bs-target="#tab-lp3m" aria-controls="tab-lp3m" aria-selected="false">LP3M</button>
+                    <button class="nav-link sotk-btn-tab" type="button" role="tab" data-bs-toggle="pill" data-bs-target="#tab-kpmd" aria-controls="tab-kpmd" aria-selected="false">KPMD</button>
+                    <button class="nav-link sotk-btn-tab" type="button" role="tab" data-bs-toggle="pill" data-bs-target="#tab-pkk" aria-controls="tab-pkk" aria-selected="false">PKK</button>
+                    <button class="nav-link sotk-btn-tab" type="button" role="tab" data-bs-toggle="pill" data-bs-target="#tab-phbi" aria-controls="tab-phbi" aria-selected="false">PHBI</button>
+                    <button class="nav-link sotk-btn-tab" type="button" role="tab" data-bs-toggle="pill" data-bs-target="#tab-linmas" aria-controls="tab-linmas" aria-selected="false">LINMAS</button>
+                    <button class="nav-link sotk-btn-tab" type="button" role="tab" data-bs-toggle="pill" data-bs-target="#tab-fkpm" aria-controls="tab-fkpm" aria-selected="false">FKPM</button>
+                    <button class="nav-link sotk-btn-tab" type="button" role="tab" data-bs-toggle="pill" data-bs-target="#tab-tani" aria-controls="tab-tani" aria-selected="false">Kelompok Tani</button>
+                    <button class="nav-link sotk-btn-tab" type="button" role="tab" data-bs-toggle="pill" data-bs-target="#tab-kt" aria-controls="tab-kt" aria-selected="false">Karang Taruna</button>
+                </div>
+
+                <div class="tab-content mt-4">
+                    
+                    <div class="tab-pane fade show active" id="tab-pemdes">
+                        <h4 class="fw-bold text-center mb-4 text-dark">Pemerintah Desa Binorong</h4>
+                        
+                        <div class="sotk-wrapper mb-5">
+                            
+                            <div class="row justify-content-center mb-4">
+                                <div class="col-6 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="sotk-card mx-auto">
+                                        <div class="sotk-img-container">
+                                            <img src="/website-profildesa/assets/images/sotk/kades.jpeg" alt="Kepala Desa">
+                                        </div>
+                                        <div class="sotk-name-tag">
+                                            KHOLIDUN
+                                            <small>Kepala Desa (PJ)</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                            <div class="row justify-content-center g-4 mb-4">
+                                <div class="col-6 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="sotk-card">
+                                        <div class="sotk-img-container"><img src="/website-profildesa/assets/images/sotk/p1.jpeg" alt="Sekretaris Desa"></div>
+                                        <div class="sotk-name-tag">SARTO WIYONO<small>Sekretaris Desa</small></div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="sotk-card">
+                                        <div class="sotk-img-container"><img src="/website-profildesa/assets/images/sotk/p2.jpeg" alt="Kaur Tata Usaha dan Umum"></div>
+                                        <div class="sotk-name-tag">R. KUNCORO A.W.<small>Kaur TU & Umum</small></div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="sotk-card">
+                                        <div class="sotk-img-container"><img src="/website-profildesa/assets/images/sotk/p3.jpeg" alt="Kaur Keuangan"></div>
+                                        <div class="sotk-name-tag">DIYAH UTAMI<small>Kaur Keuangan</small></div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="sotk-card">
+                                        <div class="sotk-img-container"><img src="/website-profildesa/assets/images/sotk/p4.jpeg" alt="Kaur Perencanaan"></div>
+                                        <div class="sotk-name-tag">ENING SUGIHARTI<small>Kaur Perencanaan</small></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row justify-content-center g-4">
+                                <div class="col-6 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="sotk-card">
+                                        <div class="sotk-img-container"><img src="/website-profildesa/assets/images/sotk/p5.jpeg" alt="Kasi Kesejahteraan"></div>
+                                        <div class="sotk-name-tag">AGUS BUDIYANTO<small>Kasi Kesejahteraan</small></div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="sotk-card">
+                                        <div class="sotk-img-container"><img src="/website-profildesa/assets/images/sotk/p6.jpeg" alt="Kasi Pemerintahan"></div>
+                                        <div class="sotk-name-tag">MISYONO<small>Kasi Pemerintahan</small></div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="sotk-card">
+                                        <div class="sotk-img-container"><img src="/website-profildesa/assets/images/sotk/p7.jpeg" alt="Kadus 1"></div>
+                                        <div class="sotk-name-tag">TURMAWONO<small>Kadus I</small></div>
+                                    </div>
+                                </div>
+                                <div class="col-6 col-sm-6 col-md-4 col-lg-3">
+                                    <div class="sotk-card">
+                                        <div class="sotk-img-container"><img src="/website-profildesa/assets/images/sotk/p8.jpeg" alt="Kasi Pelayanan"></div>
+                                        <div class="sotk-name-tag">SUYITNO<small>Kadus III</small></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="table-responsive mt-4">
+                            <table class="table table-bordered table-striped align-middle">
+                                <thead class="table-dark">
+                                    <tr>
+                                        <th style="width: 5%;" class="text-center">NO</th>
+                                        <th>Nama</th>
+                                        <th>Jabatan</th>
+                                        <th>SK Pengangkatan (Pejabat, Nomor SK, Tanggal SK)</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td class="text-center">1</td><td>KHOLIDUN</td><td>Kepala Desa (PJ)</td><td>-</td></tr>
+                                    <tr><td class="text-center">2</td><td>SARTO WIYONO</td><td>Sekretaris Desa</td><td>Kepala Desa, 141.3/15/IV Tahun 2017, 28 April 2017</td></tr>
+                                    <tr><td class="text-center">3</td><td>R. KUNCORO A.W.</td><td>Kaur Tata Usaha dan Umum</td><td>Kepala Desa, 141.3/17/IV Tahun 2017, 28 April 2017</td></tr>
+                                    <tr><td class="text-center">4</td><td>DIYAH UTAMI</td><td>Kaur Keuangan</td><td>Kepala Desa, 141.3/16/IV Tahun 2017, 28 April 2017</td></tr>
+                                    <tr><td class="text-center">5</td><td>ENING SUGIHARTI</td><td>Kaur Perencanaan</td><td>Kepala Desa, 09/Tahun 2017, 10 Januari 2017</td></tr>
+                                    <tr><td class="text-center">6</td><td>AGUS BUDIYANTO</td><td>Kasi Kesejahteraan</td><td>Kepala Desa, 11/Tahun 2017, 10 Januari 2017</td></tr>
+                                    <tr><td class="text-center">7</td><td>MISYONO</td><td>Kasi Pemerintahan</td><td>Kepala Desa, 10/Tahun 2017, 10 Januari 2017</td></tr>
+                                    <tr><td class="text-center">8</td><td>WIDIYANTO</td><td>Kasi Pelayanan</td><td>Kepala Desa, 141.3/18/IV Tahun 2017, 28 April 2017</td></tr>
+                                    <tr><td class="text-center">9</td><td>TURMAWONO</td><td>Kadus 1</td><td>Kepala Desa, 12/Tahun 2017, 10 Januari 2017</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="tab-bpd">
+                        <h4 class="fw-bold text-center mb-3 text-dark">Badan Permusyawaratan Desa (BPD)</h4>
+                        <p class="text-muted text-center mb-4">BPD adalah lembaga perwakilan masyarakat yang berfungsi menetapkan peraturan desa bersama kepala desa, menampung dan menyalurkan aspirasi masyarakat, serta mengawasi kinerja kepala desa. BPD berkedudukan sebagai mitra sejajar pemerintah desa dalam tata kelola pemerintahan yang demokratis.</p>
+                        <div class="row justify-content-center">
+                            <div class="col-md-9">
+                                <ul class="list-unstyled bpd-box-list bg-light p-4 rounded-4 border shadow-sm text-start">
+                                    <li><i class="fa-solid fa-user-tie text-danger me-2"></i> <strong>1. Ketua:</strong> BAMBANG CIPTO MARDOWO</li>
+                                    <li><i class="fa-solid fa-user-shield text-danger me-2"></i> <strong>2. Wakil Ketua:</strong> AKHMAD</li>
+                                    <li><i class="fa-solid fa-file-signature text-danger me-2"></i> <strong>3. Sekretaris:</strong> ARIYANTI</li>
+                                    <li class="pt-3">
+                                        <i class="fa-solid fa-users text-danger me-2"></i> <strong>4. Anggota:</strong>
+                                        <ol class="mt-2 text-secondary fw-semibold">
+                                            <li>WIWIT BUDIARTI</li>
+                                            <li>INDAH PRASETYANINGSIH</li>
+                                            <li>SOLECHAH</li>
+                                            <li>KHUSNU ROZAQ</li>
+                                            <li>SUKMARIA WINDAH CAHYANI</li>
+                                            <li>PUJIANTI</li>
+                                        </ol>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="tab-rtrw">
+                        <h4 class="fw-bold text-center mb-4 text-dark">Data Wilayah Rukun Warga (RW) & Rukun Tetangga (RT)</h4>
+                        
+                        <h5 class="fw-bold text-maroon mb-2"><i class="fa-solid fa-folder-tree me-2"></i>1. Ketua RW</h5>
+                        <div class="table-responsive mb-4">
+                            <table class="table table-bordered table-striped align-middle">
+                                <thead class="table-dark">
+                                    <tr><th style="width: 10%;">NO</th><th>NAMA</th><th>JABATAN</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>1</td><td>SISWADI</td><td>KETUA RW I</td></tr>
+                                    <tr><td>2</td><td>ACHMAD SHOLEH</td><td>KETUA RW II</td></tr>
+                                    <tr><td>3</td><td>MUNANDAR</td><td>KETUA RW III</td></tr>
+                                    <tr><td>4</td><td>JADI NURYANTO</td><td>KETUA RW IV</td></tr>
+                                    <tr><td>5</td><td>PUJIYONO</td><td>KETUA RW V</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h5 class="fw-bold text-maroon mb-2"><i class="fa-solid fa-users-viewfinder me-2"></i>2. Ketua RT</h5>
+                        <div class="scrollable-table-box">
+                            <table class="table table-bordered table-striped align-middle mb-0">
+                                <thead class="table-dark sticky-table-head">
+                                    <tr><th style="width: 10%;">NO</th><th>NAMA</th><th>JABATAN</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>1</td><td>SUKAMTO</td><td>Ketua RT 1 RW I</td></tr>
+                                    <tr><td>2</td><td>RAHMADI</td><td>Ketua RT 2 RW I</td></tr>
+                                    <tr><td>3</td><td>RIDO PURWANTO</td><td>Ketua RT 3 RW I</td></tr>
+                                    <tr><td>4</td><td>DAROJAT</td><td>Ketua RT 4 RW I</td></tr>
+                                    <tr><td>5</td><td>ARIS PRIYONO</td><td>Ketua RT 5 RW I</td></tr>
+                                    <tr><td>6</td><td>KHADIMUN</td><td>Ketua RT 6 RW I</td></tr>
+                                    <tr><td>7</td><td>SADJIMAN</td><td>Ketua RT 1 RW II</td></tr>
+                                    <tr><td>8</td><td>SUKISNO</td><td>Ketua RT 2 RW II</td></tr>
+                                    <tr><td>9</td><td>MOH. ANDAR</td><td>Ketua RT 3 RW II</td></tr>
+                                    <tr><td>10</td><td>SAMYO</td><td>Ketua RT 4 RW II</td></tr>
+                                    <tr><td>11</td><td>HERMANTO</td><td>Ketua RT 5 RW II</td></tr>
+                                    <tr><td>12</td><td>SUGIARTO</td><td>Ketua RT 1 RW III</td></tr>
+                                    <tr><td>13</td><td>NASRUN</td><td>Ketua RT 2 RW III</td></tr>
+                                    <tr><td>14</td><td>MISYONO</td><td>Ketua RT 3 RW III</td></tr>
+                                    <tr><td>15</td><td>SETYO HARLINDI</td><td>Ketua RT 4 RW III</td></tr>
+                                    <tr><td>16</td><td>WARIJAN</td><td>Ketua RT 5 RW III</td></tr>
+                                    <tr><td>17</td><td>SUSANTO</td><td>Ketua RT 6 RW III</td></tr>
+                                    <tr><td>18</td><td>ARSO SUTOMO</td><td>Ketua RT 7 RW III</td></tr>
+                                    <tr><td>19</td><td>AGUS KUSMANA</td><td>Ketua RT 1 RW IV</td></tr>
+                                    <tr><td>20</td><td>IHSAN</td><td>Ketua RT 2 RW IV</td></tr>
+                                    <tr><td>21</td><td>SUWARNO</td><td>Ketua RT 3 RW IV</td></tr>
+                                    <tr><td>22</td><td>ADE HENDRA M</td><td>Ketua RT 4 RW IV</td></tr>
+                                    <tr><td>23</td><td>KHATOYO</td><td>Ketua RT 5 RW IV</td></tr>
+                                    <tr><td>24</td><td>SUTIRTO</td><td>Ketua RT 6 RW IV</td></tr>
+                                    <tr><td>25</td><td>YULIANTO</td><td>Ketua RT 1 RW V</td></tr>
+                                    <tr><td>26</td><td>ROKHUDIN</td><td>Ketua RT 2 RW V</td></tr>
+                                    <tr><td>27</td><td>ROSIKHUN</td><td>Ketua RT 3 RW V</td></tr>
+                                    <tr><td>28</td><td>HADIYONO</td><td>Ketua RT 4 RW V</td></tr>
+                                    <tr><td>29</td><td>ARIFIN</td><td>Ketua RT 5 RW V</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="tab-lp3m">
+                        <h4 class="fw-bold text-center mb-4 text-dark">Susunan Kepengurusan LP3M</h4>
+                        <p class="text-muted text-center mb-4">LP3M (Lembaga Pemberdayaan, Pengkajian, dan Pengembangan Masyarakat) adalah lembaga kemasyarakatan desa yang bertugas membantu pemerintah desa menyusun rencana pembangunan secara partisipatif, menggerakkan swadaya gotong royong masyarakat, serta melaksanakan dan mengendalikan pembangunan</p>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped align-middle">
+                                <thead class="table-dark">
+                                    <tr><th style="width: 8%;">NO</th><th>NAMA</th><th>JABATAN</th><th>ALAMAT</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>1</td><td>BAMBANG ISMANTO S.KM</td><td>Ketua I</td><td>RT 05 RW I</td></tr>
+                                    <tr><td>2</td><td>H. SUGITO</td><td>Ketua II</td><td>RT 03 RW V</td></tr>
+                                    <tr><td>3</td><td>DEMI SUWITO</td><td>Sekretaris I</td><td>RT 04 RW III</td></tr>
+                                    <tr><td>4</td><td>TUMINGAN</td><td>Sekretaris II</td><td>RT 03 RW II</td></tr>
+                                    <tr><td>5</td><td>SUDARNO</td><td>Bendahara</td><td>RT 03 RW I</td></tr>
+                                    <tr><td>6</td><td>YUDI RIYANTO</td><td>Seksi Agama</td><td>RT 03 RW IV</td></tr>
+                                    <tr><td>7</td><td>SIGIT SUGIYANTO</td><td>Seksi Pendidikan Dan Kebudayaan Dan Moral Pancasila</td><td>RT 04 RW V</td></tr>
+                                    <tr><td>8</td><td>KHOLIDUN</td><td>Seksi Perekonomian Pengembangan Usaha Kecil Dan Koperasi</td><td>RT 05 RW I</td></tr>
+                                    <tr><td>9</td><td>SURYONO</td><td>Seksi Pembangunan Sarana Dan Prasarana Lingkungan</td><td>RT 07 RW III</td></tr>
+                                    <tr><td>10</td><td>ERNA PUSPIARTI</td><td>Seksi Pemberdayaan Perempuan</td><td>RT 05 RW II</td></tr>
+                                    <tr><td>11</td><td>M. AMIN EFENDI</td><td>Seksi Kesra Kesehatan Dan Kependudukan</td><td>RT 05 RW I</td></tr>
+                                    <tr><td>12</td><td>HARTOYO</td><td>Seksi Keamanan Dan Ketertiban</td><td>RT 02 RW III</td></tr>
+                                    <tr><td>13</td><td>AFRI WINARNO</td><td>Seksi Kesenian Dan Olahraga</td><td>RT 05 RW I</td></tr>
+                                    <tr><td>14</td><td>TUCHAM</td><td>Anggota</td><td>RT 01 RW IV</td></tr>
+                                    <tr><td>15</td><td>SOLEH MANSYUR</td><td>Anggota</td><td>RT 04 RW V</td></tr>
+                                    <tr><td>16</td><td>INDRIYANI</td><td>Anggota</td><td>RT 05 RW I</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="tab-kpmd">
+                        <h4 class="fw-bold text-center mb-4 text-dark">Susunan Anggota KPMD</h4>
+                        <p class="text-muted text-center mb-4">KPMD (Kader Pemberdayaan Masyarakat Desa) adalah warga yang ditunjuk untuk membantu pemerintah desa dalam perencanaan, pelaksanaan, dan pengawasan program pemberdayaan dan pembangunan desa</p>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped align-middle">
+                                <thead class="table-dark">
+                                    <tr><th style="width: 10%;">NO</th><th>NAMA</th><th>JABATAN</th><th>ALAMAT</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>1</td><td>NURTIYANI</td><td>Ketua</td><td>RT 03 RW III</td></tr>
+                                    <tr><td>2</td><td>AFRI WINARNO</td><td>Anggota</td><td>RT 05 RW I</td></tr>
+                                    <tr><td>3</td><td>PRAMANTO</td><td>Anggota</td><td>RT 01 RW III</td></tr>
+                                    <tr><td>4</td><td>ENING SUPPRIYANTI</td><td>Anggota</td><td>RT 04 RW IV</td></tr>
+                                    <tr><td>5</td><td>SATIMIN</td><td>Anggota</td><td>RT 05 RW III</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="tab-pkk">
+                        <h4 class="fw-bold text-center mb-4 text-dark">Susunan Tim Penggerak PKK</h4>
+                        <p class="text-muted text-center mb-4">PKK (Pesejahteraan Keluarga) adalah organisasi yang membina dan memberdayakan keluarga untuk meningkatkan kesejahteraan lahir dan batin, serta menjadi mitra strategis pemerintah desa dalam pembangunan yang berfokus pada keluarga sebagai unit terkecil masyarakat.</p>
+                        <div class="scrollable-table-box">
+                            <table class="table table-bordered table-striped align-middle mb-0">
+                                <thead class="table-dark sticky-table-head">
+                                    <tr><th style="width: 8%;">NO</th><th>NAMA</th><th>JABATAN</th><th>ALAMAT</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>1</td><td>JURIYAH</td><td>Ketua</td><td>RT 02 RW II</td></tr>
+                                    <tr><td>2</td><td>ROHMI LESTARI</td><td>WAKIL KETUA I</td><td>RT 02 RW V</td></tr>
+                                    <tr><td>3</td><td>ISMIATUN</td><td>WAKIL KETUA II</td><td>RT 01 RW I</td></tr>
+                                    <tr><td>4</td><td>SURIPAH</td><td>WAKIL KETUA III</td><td>RT 06 RW III</td></tr>
+                                    <tr><td>5</td><td>SITI PURWANTI</td><td>WAKIL KETUA IV</td><td>RT 05 RW IV</td></tr>
+                                    <tr><td>6</td><td>SITI SIAMI</td><td>KETUA POKJA I</td><td>RT 04 RW V</td></tr>
+                                    <tr><td>7</td><td>PARYATI</td><td>KETUA POKJA II</td><td>RT 01 RW I</td></tr>
+                                    <tr><td>8</td><td>PURWANTI</td><td>KETUA POKJA III</td><td>RT 02 RW IV</td></tr>
+                                    <tr><td>9</td><td>SARAS WIDYANINGRUM</td><td>KETUA POKJA IV</td><td>RT 05 RW I</td></tr>
+                                    <tr><td>10</td><td>KHUSNUL KHOTIMAH</td><td>Sekretaris I</td><td>RT 05 RW I</td></tr>
+                                    <tr><td>11</td><td>NUR’AENI</td><td>SEKRETARIS II</td><td>RT 02 RW II</td></tr>
+                                    <tr><td>12</td><td>ANISAH</td><td>SEKRETARIS III</td><td>RT 05 RW III</td></tr>
+                                    <tr><td>13</td><td>HARYATI</td><td>SEKRETARIS IV</td><td>RT 02 RW I</td></tr>
+                                    <tr><td>14</td><td>INDAH PRASETYANINGSIH</td><td>SEKRETARIS V</td><td>RT 03 RW I</td></tr>
+                                    <tr><td>15</td><td>SRI ASTUTI</td><td>SEKRETARIS VI</td><td>RT 02 RW III</td></tr>
+                                    <tr><td>16</td><td>WIWIT BUDIARTI</td><td>BENDAHARA I</td><td>RT 01 RW 4</td></tr>
+                                    <tr><td>17</td><td>ENING SUGIHARTI</td><td>BENDAHARA II</td><td>RT 01 RW 4</td></tr>
+                                    <tr><td>18</td><td>JUMPRIHATI</td><td>ANGGOTA</td><td>RT 05 RW V</td></tr>
+                                    <tr><td>19</td><td>SUWARTI</td><td>ANGGOTA</td><td>RT 03 RW II</td></tr>
+                                    <tr><td>20</td><td>SITI MAESAROH</td><td>ANGGOTA</td><td>RT 01 RW I</td></tr>
+                                    <tr><td>21</td><td>SITI AMINAH</td><td>ANGGOTA</td><td>RT 06 RW III</td></tr>
+                                    <tr><td>22</td><td>DEWI SURATI</td><td>ANGGOTA</td><td>RT 05 RW III</td></tr>
+                                    <tr><td>23</td><td>ENDANG</td><td>ANGGOTA</td><td>RT 01 RW II</td></tr>
+                                    <tr><td>24</td><td>MUJIYAH</td><td>ANGGOTA</td><td>RT 06 RW I</td></tr>
+                                    <tr><td>25</td><td>SITI YUNIAR</td><td>ANGGOTA</td><td>RT 02 RET IV</td></tr>
+                                    <tr><td>26</td><td>SRI SUHARTI</td><td>ANGGOTA</td><td>RT 02 RW IV</td></tr>
+                                    <tr><td>27</td><td>FARIDA HENDREAS</td><td>ANGGOTA</td><td>RT 03 RW II</td></tr>
+                                    <tr><td>28</td><td>RUSMIYAH</td><td>ANGGOTA</td><td>RT 02 RW III</td></tr>
+                                    <tr><td>29</td><td>DEDEH</td><td>ANGGOTA</td><td>RT 06 RW IV</td></tr>
+                                    <tr><td>30</td><td>INDRIANI</td><td>ANGGOTA</td><td>RT 05 RW I</td></tr>
+                                    <tr><td>31</td><td>MAHMUDAH</td><td>ANGGOTA</td><td>RT 01 RW III</td></tr>
+                                    <tr><td>32</td><td>SUGIARTI</td><td>ANGGOTA</td><td>RT 03 RW II</td></tr>
+                                    <tr><td>33</td><td>ARI NURNILAMSARI</td><td>ANGGOTA</td><td>RT 01 RW II</td></tr>
+                                    <tr><td>34</td><td>SUMINGAH</td><td>ANGGOTA</td><td>RT 05 RW III</td></tr>
+                                    <tr><td>35</td><td>WASIYAH</td><td>ANGGOTA</td><td>RT 04 RW V</td></tr>
+                                    <tr><td>36</td><td>ENING SUPRIYANTI</td><td>ANGGOTA</td><td>RT 04 RW IV</td></tr>
+                                    <tr><td>37</td><td>MIRANTI</td><td>ANGGOTA</td><td>RT 04 RW I</td></tr>
+                                    <tr><td>38</td><td>SULASMI</td><td>ANGGOTA</td><td>RT 05 RW II</td></tr>
+                                    <tr><td>39</td><td>SUKATMI</td><td>ANGGOTA</td><td>RT 01 RW V</td></tr>
+                                    <tr><td>40</td><td>MISKEM</td><td>ANGGOTA</td><td>RT 02 RW II</td></tr>
+                                    <tr><td>41</td><td>SITI KHOWIYAH</td><td>ANGGOTA</td><td>RT 04 RW IV</td></tr>
+                                    <tr><td>42</td><td>MISTINGAH</td><td>ANGGOTA</td><td>RT 02 RW V</td></tr>
+                                    <tr><td>43</td><td>DIYAH UTAMI</td><td>ANGGOTA</td><td>RT 01 RW I</td></tr>
+                                    <tr><td>44</td><td>DEWI SULISTYO WULANDARI</td><td>ANGGOTA</td><td>RT 02 RW I</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="tab-phbi">
+                        <h4 class="fw-bold text-center mb-4 text-dark">Susunan Pengurus PHBI</h4>
+                        <p class="text-muted text-center mb-4">Panitia Hari Besar Islam (PHBI) tingkat desa bertugas merencanakan, mempersiapkan, dan melaksanakan berbagai kegiatan syiar keagamaan Islam.</p>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped align-middle">
+                                <thead class="table-dark">
+                                    <tr><th style="width: 10%;">NO</th><th>NAMA</th><th>JABATAN</th><th>ALAMAT</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>1</td><td>RAHMADI</td><td>KETUA I</td><td>RT 06 RW III</td></tr>
+                                    <tr><td>2</td><td>SARTO WIYONO</td><td>SEKRETARIS I</td><td>RT 01 RW III</td></tr>
+                                    <tr><td>3</td><td>MISWANTO</td><td>SEKRETARIS II</td><td>RT 06 RW I</td></tr>
+                                    <tr><td>4</td><td>H. SUGITO</td><td>BENDAHARA I</td><td>RT 03 RW V</td></tr>
+                                    <tr><td>5</td><td>HASIM</td><td>BENDAHARA II</td><td>RT 02 RW I</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="tab-linmas">
+                        <h4 class="fw-bold text-center mb-4 text-dark">Susunan Anggota SATLINMAS</h4>
+                        <p class="text-muted text-center mb-4">Satlinmas (Satuan Perlindungan Masyarakat) desa bertugas membantu penyelenggaraan ketenteraman, ketertiban umum, dan perlindungan masyarakat dalam skala kewenangan desa</p>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped align-middle">
+                                <thead class="table-dark">
+                                    <tr><th style="width: 8%;">NO</th><th>NAMA</th><th>JABATAN</th><th>ALAMAT</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>1</td><td>MA'RUF ROCHAYANTO</td><td>DANTON</td><td>RT 05 RW IV</td></tr>
+                                    <tr><td>2</td><td>MISNGAD</td><td>SEKRETARIS</td><td>RT 05 RW IV</td></tr>
+                                    <tr><td>3</td><td>SOHIRIN</td><td>BENDAHARA</td><td>RT 03 RW V</td></tr>
+                                    <tr><td>4</td><td>SABAR MAHYANTO</td><td>ANGGOTA</td><td>RT 07 RW III</td></tr>
+                                    <tr><td>5</td><td>ISWANDI</td><td>ANGGOTA</td><td>RT 07 RW III</td></tr>
+                                    <tr><td>6</td><td>ANTON SUBEJO</td><td>ANGGOTA</td><td>RT 07 RW III</td></tr>
+                                    <tr><td>7</td><td>SARWONO</td><td>ANGGOTA</td><td>RT 07 RW III</td></tr>
+                                    <tr><td>8</td><td>SISWANTO</td><td>ANGGOTA</td><td>RT 07 RW III</td></tr>
+                                    <tr><td>9</td><td>SUWARIS</td><td>ANGGOTA</td><td>RT 02 RW III</td></tr>
+                                    <tr><td>10</td><td>EDI SUMARNO</td><td>ANGGOTA</td><td>RT 04 RW V</td></tr>
+                                    <tr><td>11</td><td>SUWAHYU</td><td>ANGGOTA</td><td>RT 02 RW V</td></tr>
+                                    <tr><td>12</td><td>MAKIMAN</td><td>ANGGOTA</td><td>RT 04 RW III</td></tr>
+                                    <tr><td>13</td><td>MISRON</td><td>ANGGOTA</td><td>RT 04 RW IV</td></tr>
+                                    <tr><td>14</td><td>ISMAIL</td><td>ANGGOTA</td><td>RT 03 RW V</td></tr>
+                                    <tr><td>15</td><td>SINGGIH BIANTORO</td><td>ANGGOTA</td><td>RT 06 RW I</td></tr>
+                                    <tr><td>16</td><td>WASIDI</td><td>ANGGOTA</td><td>RT 01 RW IV</td></tr>
+                                    <tr><td>17</td><td>ISKANDAR</td><td>ANGGOTA</td><td>RT 05 RW I</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="tab-fkpm">
+                        <h4 class="fw-bold text-center mb-4 text-dark">Susunan Pengurus FKPM</h4>
+                        <p class="text-muted text-center mb-4">FKPM (Forum Kemitraan Polisi dan Masyarakat) di tingkat desa adalah wadah kerja sama kemitraan antara Polri dan masyarakat untuk bersama-sama mendeteksi, memahami, dan memecahkan berbagai permasalahan sosial guna memelihara Keamanan dan Ketertiban Masyarakat.</p>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped align-middle">
+                                <thead class="table-dark">
+                                    <tr><th style="width: 10%;">NO</th><th>NAMA</th><th>JABATAN</th><th>ALAMAT</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>1</td><td>KHARISUN</td><td>KETUA</td><td>RT 02 RW V</td></tr>
+                                    <tr><td>2</td><td>TURMAWONO</td><td>SEKRETARIS</td><td>RT 01 RW II</td></tr>
+                                    <tr><td>3</td><td>HAJID SETIADI</td><td>ANGGOTA</td><td>RT 05 RW I</td></tr>
+                                    <tr><td>4</td><td>PUJIYANTO</td><td>ANGGOTA</td><td>RT 01 RW I</td></tr>
+                                    <tr><td>5</td><td>UDI PRIYONO</td><td>ANGGOTA</td><td>RT 02 RW II</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="tab-tani">
+                        <h4 class="fw-bold text-center mb-4 text-dark">Gabungan Kelompok Tani & Wanita Tani</h4>
+                        <p class="text-muted text-center mb-4">Organisasi yang menyatukan beberapa kelompok tani di desa untuk meningkatkan skala ekonomi, efisiensi, dan kemandirian usaha tani.</p>
+                        <h5 class="fw-bold text-success mb-2"><i class="fa-solid fa-wheat-awn me-2"></i>1. Kelompok Tani</h5>
+                        <div class="table-responsive mb-4">
+                            <table class="table table-bordered table-striped align-middle">
+                                <thead class="table-dark">
+                                    <tr><th style="width: 8%;">NO</th><th>KELOMPOK</th><th>NAMA PENGURUS</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>1</td><td><strong>SURYA SEKAWAN</strong></td><td>SUKISNO, MUHROMI, SAMYO</td></tr>
+                                    <tr><td>2</td><td><strong>SURYA SEKAWAN 2</strong></td><td>RASMIN, AWALUDIN, NARDI</td></tr>
+                                    <tr><td>3</td><td><strong>TANI JAYA</strong></td><td>JIRUN, SUYITNO, MISROM</td></tr>
+                                    <tr><td>4</td><td><strong>TANI JAYA 2</strong></td><td>KHARISUN, SUYATNO, MASRURUDIN</td></tr>
+                                    <tr><td>5</td><td><strong>BERKAH GUYUB</strong></td><td>AJI KUNCORO, ISWANTO, HENDRA MULYONO</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <h5 class="fw-bold text-success mb-2"><i class="fa-solid fa-seedling me-2"></i>2. Kelompok Wanita Tani</h5>
+                        <div class="table-responsive">
+                            <table class="table table-bordered table-striped align-middle">
+                                <thead class="table-dark">
+                                    <tr><th style="width: 8%;">NO</th><th>KELOMPOK</th><th>NAMA PENGURUS</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>1</td><td><strong>TULIP</strong></td><td>SEPTIN SOLIKHAH, SITI MIRANTI, NINDA RARAS PRATAMI</td></tr>
+                                    <tr><td>2</td><td><strong>MELATI</strong></td><td>SUKATMI, SUPARMI, KUNESTI</td></tr>
+                                    <tr><td>3</td><td><strong>LESTARI</strong></td><td>MUJIAH</td></tr>
+                                    <tr><td>4</td><td><strong>SUBUR ALAMI</strong></td><td>YANI KUSTIYATI, RATNAWATI, FATMAH WARNATI</td></tr>
+                                    <tr><td>5</td><td><strong>DAHLIA</strong></td><td>YUNI ISNIYATUN, SARI, SUWARTI</td></tr>
+                                    <tr><td>6</td><td><strong>WIJAYA KUSUMA</strong></td><td>EKA KARTIKA SARI, EVI YUNITA, CANDRA NITA P.</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="tab-kt">
+                        <h4 class="fw-bold text-center mb-4 text-dark">Susunan Kepengurusan Karang Taruna</h4>
+                        <p class="text-muted text-center mb-4">Karang Taruna adalah lembaga kemasyarakatan yang berfungsi sebagai wadah pembinaan, pengembangan, dan pemberdayaan generasi muda.</p>
+                        <div class="scrollable-table-box">
+                            <table class="table table-bordered table-striped align-middle mb-0">
+                                <thead class="table-dark sticky-table-head">
+                                    <tr><th style="width: 8%;">NO</th><th>NAMA</th><th>Pekerjaan</th><th>JABATAN DALAM PENGURUS</th></tr>
+                                </thead>
+                                <tbody>
+                                    <tr><td>1</td><td>KHOLIDUN</td><td>Kepala Desa (PJ)</td><td>Pembina</td></tr>
+                                    <tr><td>2</td><td>SUHERMAN</td><td>Wiraswasta</td><td>Ketua</td></tr>
+                                    <tr><td>3</td><td>JUMONO</td><td>Wiraswasta</td><td>Wakil Ketua</td></tr>
+                                    <tr><td>4</td><td>FIKA MEGA AMARTA</td><td>Guru</td><td>Sekretaris</td></tr>
+                                    <tr><td>5</td><td>LAELATUL MUKAROMAH</td><td>Guru</td><td>Wakil Sekretaris</td></tr>
+                                    <tr><td>6</td><td>PUJI ARTINI</td><td>Guru</td><td>Bendahara</td></tr>
+                                    <tr><td>7</td><td>MITA KURNIAWATI</td><td>Wiraswasta</td><td>Wakil Bendahara</td></tr>
+                                    <tr><td>8</td><td>BANU NUR HIDAYAT</td><td>Wiraswasta</td><td>Bidang Advokasi dan HAM</td></tr>
+                                    <tr><td>9</td><td>DWIKI CAHYO ANGGA BUANA</td><td>Karyawan Swasta</td><td>Bidang Humas Publikasi dan Komunikasi</td></tr>
+                                    <tr><td>10</td><td>LAURA FARA YULIANA</td><td>Mahasiswa</td><td>Bidang Lingkungan Hidup</td></tr>
+                                    <tr><td>11</td><td>RIAS TRIONO</td><td>Wiraswasta</td><td>Bidang Olahraga dan Seni Budaya</td></tr>
+                                    <tr><td>12</td><td>RIZKY OKTAFIYANA</td><td>Karyawan Swasta</td><td>Bidang Pengembangan Oraganisasi dan Hubungan Kerjasama Kemitraan</td></tr>
+                                    <tr><td>13</td><td>AGUNG RIADI</td><td>Karyawan Swasta</td><td>Bidang Usaha Kesejahteraan Sosial</td></tr>
+                                    <tr><td>14</td><td>AKHMAD HASAN FEBRIKA</td><td>Karyawan Swasta</td><td>Bidang Pembinaan Mental dan Kerohanian</td></tr>
+                                    <tr><td>15</td><td>INTAN NADIYA</td><td>Guru</td><td>Bidang Pendidikan dan Pelatihan</td></tr>
+                                    <tr><td>16</td><td>AJI DIAR RETMAWAN</td><td>Karyawan Swasta</td><td>Bidang Pengembangan Ekonomi Koperasi dan UMKM</td></tr>
+                                    <tr><td>17</td><td>LILIS</td><td>Wiraswasta</td><td>Anggota</td></tr>
+                                    <tr><td>18</td><td>ANGGRANENI PUSPITA S</td><td>Mahasiswa</td><td>Anggota</td></tr>
+                                    <tr><td>19</td><td>YATIMAH SRI L</td><td>Karyawan Swasta</td><td>Anggota</td></tr>
+                                    <tr><td>20</td><td>ANUGRAH YOLAND</td><td>Mahasiswa</td><td>Anggota</td></tr>
+                                    <tr><td>21</td><td>ALMASH CITRA MARINTAN</td><td>Mahasiswa</td><td>Anggota</td></tr>
+                                    <tr><td>22</td><td>MA'MUN SANTOSA</td><td>Perawat</td><td>Anggota</td></tr>
+                                    <tr><td>23</td><td>DIFA RATIH PURUHITA</td><td>Mahasiswa</td><td>Anggota</td></tr>
+                                    <tr><td>24</td><td>IIN PANGESTU</td><td>Karyawan Swasta</td><td>Anggota</td></tr>
+                                    <tr><td>25</td><td>ALVINA MAULANI</td><td>Mahasiswa</td><td>Anggota</td></tr>
+                                    <tr><td>26</td><td>IFFAT ARDELIA HAZNA</td><td>Mahasiswa</td><td>Anggota</td></tr>
+                                    <tr><td>27</td><td>AGENG NUR RIZKIYANTO</td><td>Karyawan Swasta</td><td>Anggota</td></tr>
+                                    <tr><td>28</td><td>ARDINI VIKA ADE PUTRI</td><td>Mahasiswa</td><td>Anggota</td></tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div> 
+            </div> 
+        </div>
+    </section>
+
+    <footer class="footer-desa-resmi text-white py-4 mt-5">
+        <div class="container">
+            <div class="row align-items-center mb-4">
+            
+                <div class="col-md-7 d-flex align-items-start mb-3 mb-md-0">
+                    <img src="/website-profildesa/assets/images/bg/LogoKabBna.png" alt="Logo Kabupaten" class="img-fluid me-3" style="width: 110px; height: auto;">
+                    <div>
+                        <h4 class="fw-bold text-uppercase tracking-wider mb-1" style="font-size: 18px;">Desa Binorong</h4>
+                        <p class="small text-white-50 mb-2 lh-base" style="font-size: 13px;">
+                            Jl. Ketewel, Desa Binorong,<br>
+                            Kecamatan Bawang, Kabupaten Banjarnegara
+                        </p>
+                        <span class="badge bg-white text-dark fw-bold px-3 py-1.5" style="border-radius: 20px; font-size: 11px; letter-spacing: 0.5px;">
+                            Kode Wilayah: 33.04.05.2012
+                        </span>
+                    </div>
+                </div>
+
+                <div class="col-md-5 text-md-end d-flex flex-column align-items-md-end align-items-start">
+                    <span class="fw-semibold text-white-50 mb-2" style="font-size: 14px;">Hubungi Kami</span>
+                
+                    <div class="mb-2" style="font-size: 14px;">
+                        <i class="fa-solid fa-phone me-1.5 text-white-50"></i> 
+                        <span class="text-white">-</span>
+                    </div>
+                
+                    <div style="font-size: 14px;">
+                        <a href="mailto:desabinorong@gmail.com" target="_blank" class="text-white text-decoration-none email-footer-link">
+                            <i class="fa-solid fa-envelope me-1.5 text-white-50"></i> desabinorong@gmail.com
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <hr style="border-color: rgba(255, 255, 255, 0.15); margin: 0 0 20px 0;">
+
+            <div class="row">
+                <div class="col-12 text-center">
+                    <p class="small mb-0 text-white-50" style="font-size: 12px; letter-spacing: 0.3px;">
+                        &copy; Copyright 2026. All Rights Reserved by Naeva | Made with ❤️
+                    </p>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/website-profildesa/js/main.js"></script>
+</body>
+</html>
